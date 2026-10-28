@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>임준형 v22.0</title>
+<meta name="description" content="2003년 첫 출시 이후 가장 큰 업데이트. 임준형 v22.0을 소개합니다." />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<style>
+  :root{
+    --bg:#000; --bg2:#0b0b0f; --card:#121218; --line:#24242c;
+    --text:#f5f5f7; --sub:#a1a1aa; --dim:#6b6b75;
+    --a1:#4f8cff; --a2:#a855f7; --a3:#22d3ee; --ok:#34d399; --warn:#fbbf24; --bad:#f87171;
+    --grad:linear-gradient(120deg,var(--a1),var(--a2) 55%,var(--a3));
+    --r:20px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  section{padding:120px 0}
+  .eyebrow{font-size:14px;font-weight:600;letter-spacing:.08em;color:var(--a1);text-transform:uppercase;margin-bottom:12px}
+  h2{font-size:clamp(32px,5vw,52px);font-weight:800;letter-spacing:-.03em;line-height:1.15;margin-bottom:16px}
+  .lead{font-size:clamp(16px,2vw,20px);color:var(--sub);max-width:640px}
+
+  /* nav */
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(0,0,0,.7);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(255,255,255,.06)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:52px}
+  nav .logo{font-weight:800;font-size:16px;letter-spacing:-.02em}
+  nav .links{display:flex;gap:22px;font-size:13px;color:var(--sub)}
+  nav .links a:hover{color:var(--text)}
+  nav .buy{font-size:12px;font-weight:600;padding:6px 14px;border-radius:999px;background:var(--a1);color:#fff}
+  @media(max-width:760px){nav .links{display:none}}
+
+  /* hero */
+  .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;padding:120px 20px 80px;overflow:hidden}
+  .hero::before{content:"";position:absolute;width:900px;height:900px;border-radius:50%;background:radial-gradient(circle,rgba(79,140,255,.28),rgba(168,85,247,.14) 40%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);animation:pulse 8s ease-in-out infinite;pointer-events:none}
+  @keyframes pulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.12)}}
+  .badge{position:relative;display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--sub);border:1px solid var(--line);border-radius:999px;padding:6px 14px;margin-bottom:28px;background:rgba(255,255,255,.03)}
+  .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok)}
+  .hero h1{position:relative;font-size:clamp(56px,12vw,140px);font-weight:900;letter-spacing:-.05em;line-height:1}
+  .hero .ver{display:block;font-size:.42em;font-weight:700;letter-spacing:-.02em;margin-top:8px}
+  .hero p.tag{position:relative;font-size:clamp(18px,2.6vw,26px);font-weight:600;margin-top:28px;letter-spacing:-.02em}
+  .hero p.small{position:relative;color:var(--sub);margin-top:10px;font-size:15px}
+  .ctas{position:relative;display:flex;gap:12px;margin-top:36px;flex-wrap:wrap;justify-content:center}
+  .btn{display:inline-flex;align-items:center;gap:6px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:15px;transition:transform .2s,opacity .2s;cursor:pointer;border:none;font-family:inherit}
+  .btn:hover{transform:translateY(-2px)}
+  .btn.pri{background:var(--text);color:#000}
+  .btn.sec{background:transparent;color:var(--a1);border:1px solid rgba(79,140,255,.5)}
+  .scroll{position:absolute;bottom:28px;font-size:12px;color:var(--dim);letter-spacing:.1em}
+
+  /* spec bar */
+  .specbar{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2);padding:36px 0}
+  .specbar .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
+  .specbar .k{font-size:12px;color:var(--dim);letter-spacing:.06em;margin-bottom:6px}
+  .specbar .v{font-size:18px;font-weight:700}
+  @media(max-width:760px){.specbar .grid{grid-template-columns:repeat(2,1fr);row-gap:28px}}
+
+  /* features */
+  .features .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px}
+  .fcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:30px 26px;transition:transform .3s,border-color .3s;position:relative;overflow:hidden}
+  .fcard:hover{transform:translateY(-4px);border-color:rgba(79,140,255,.45)}
+  .fcard.big{grid-column:span 2;background:linear-gradient(135deg,#121a2e,#1a1228)}
+  .fcard.big:last-child{grid-column:span 3}
+  .fcard .ico{font-size:30px;margin-bottom:18px}
+  .fcard h3{font-size:21px;font-weight:700;letter-spacing:-.02em;margin-bottom:8px}
+  .fcard p{color:var(--sub);font-size:15px}
+  .fcard .chip{display:inline-block;margin-top:16px;font-size:12px;color:var(--a3);border:1px solid rgba(34,211,238,.35);border-radius:999px;padding:3px 10px}
+  @media(max-width:860px){.features .grid{grid-template-columns:1fr}.fcard.big,.fcard.big:last-child{grid-column:auto}}
+
+  /* compare */
+  .compare{background:var(--bg2)}
+  .ctable{margin-top:48px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+  .crow{display:grid;grid-template-columns:1.2fr 1fr 1fr;border-bottom:1px solid var(--line)}
+  .crow:last-child{border-bottom:none}
+  .crow>div{padding:18px 22px;font-size:15px}
+  .crow.head>div{font-weight:700;font-size:14px;background:#0f0f14}
+  .crow .lab{color:var(--sub)}
+  .crow .new{font-weight:600}
+  .crow.head .new{color:var(--a1)}
+  @media(max-width:600px){.crow>div{padding:14px 12px;font-size:13px}}
+
+  /* release notes */
+  .log{margin-top:56px;font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;background:#07070a;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+  .log .bar{display:flex;align-items:center;gap:7px;padding:12px 16px;border-bottom:1px solid var(--line);background:#0f0f14}
+  .log .bar i{width:11px;height:11px;border-radius:50%;display:block}
+  .log .bar span{margin-left:10px;font-size:12px;color:var(--dim)}
+  .log .body{padding:22px 22px 26px;font-size:14px}
+  .cmd{color:var(--ok);margin-bottom:18px}
+  .commit{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;padding:14px 0;border-top:1px dashed #1e1e26}
+  .commit:first-of-type{border-top:none}
+  .hash{color:var(--warn)}
+  .tagv{display:inline-block;font-size:11px;padding:1px 8px;border-radius:6px;background:rgba(168,85,247,.18);color:#d8b4fe;margin-left:8px}
+  .msg{color:var(--text);font-family:Pretendard,sans-serif;font-weight:600}
+  .desc{grid-column:2;color:var(--sub);font-family:Pretendard,sans-serif;font-size:14px}
+  .commit.head .tagv{background:rgba(52,211,153,.18);color:#6ee7b7}
+
+  /* bugs */
+  .bugs .list{margin-top:48px;display:grid;gap:12px}
+  .bug{display:flex;align-items:flex-start;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px}
+  .bug .id{font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--dim);min-width:70px;padding-top:2px}
+  .bug .t{flex:1}
+  .bug .t b{display:block;font-size:16px;margin-bottom:2px}
+  .bug .t span{color:var(--sub);font-size:14px}
+  .st{font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;white-space:nowrap}
+  .st.fix{background:rgba(251,191,36,.14);color:var(--warn)}
+  .st.feat{background:rgba(52,211,153,.14);color:var(--ok)}
+  .st.wont{background:rgba(248,113,113,.14);color:var(--bad)}
+  @media(max-width:600px){.bug{flex-wrap:wrap}.bug .id{min-width:auto}}
+
+  /* roadmap */
+  .roadmap{background:var(--bg2)}
+  .road{margin-top:56px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;position:relative}
+  .road::before{content:"";position:absolute;top:23px;left:24px;right:24px;height:2px;background:linear-gradient(90deg,var(--ok),var(--a1),var(--a2),var(--line))}
+  .stage{position:relative;padding-top:56px}
+  .stage .pin{position:absolute;top:12px;left:12px;width:24px;height:24px;border-radius:50%;background:var(--bg2);border:3px solid var(--a1)}
+  .stage.now .pin{border-color:var(--ok);box-shadow:0 0 0 6px rgba(52,211,153,.15)}
+  .stage.later .pin{border-color:var(--a2)}
+  .stage.vision .pin{border-color:var(--dim);border-style:dashed}
+  .stage .when{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--dim);margin-bottom:6px}
+  .stage h3{font-size:19px;font-weight:700;margin-bottom:6px;letter-spacing:-.02em}
+  .stage p{color:var(--sub);font-size:14px}
+  @media(max-width:860px){.road{grid-template-columns:1fr;gap:8px}.road::before{top:24px;bottom:24px;left:23px;right:auto;width:2px;height:auto;background:linear-gradient(180deg,var(--ok),var(--a1),var(--a2),var(--line))}.stage{padding:8px 0 24px 56px}.stage .pin{top:12px;left:12px}}
+
+  /* pricing */
+  .plans{margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .plan{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:32px 26px;display:flex;flex-direction:column}
+  .plan.hot{border-color:var(--a1);background:linear-gradient(180deg,rgba(79,140,255,.1),var(--card) 45%);position:relative}
+  .plan.hot::after{content:"가장 인기";position:absolute;top:-12px;left:26px;font-size:12px;font-weight:700;background:var(--a1);color:#fff;padding:3px 12px;border-radius:999px}
+  .plan .name{font-weight:700;color:var(--sub);font-size:15px}
+  .plan .price{font-size:30px;font-weight:800;letter-spacing:-.03em;margin:10px 0 4px}
+  .plan .per{font-size:13px;color:var(--dim);margin-bottom:22px}
+  .plan ul{list-style:none;display:grid;gap:10px;font-size:15px;flex:1}
+  .plan li::before{content:"✓";color:var(--ok);font-weight:700;margin-right:8px}
+  .plan .btn{margin-top:26px;justify-content:center}
+  @media(max-width:860px){.plans{grid-template-columns:1fr}}
+
+  /* requests */
+  .req .box{margin-top:48px;display:grid;grid-template-columns:1fr 1.3fr;gap:24px;align-items:start}
+  .form{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px;position:sticky;top:80px}
+  .form label{display:block;font-size:13px;color:var(--sub);margin-bottom:6px}
+  .form input,.form textarea{width:100%;background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:var(--text);font-family:inherit;font-size:15px;margin-bottom:14px;resize:none}
+  .form input:focus,.form textarea:focus{outline:none;border-color:var(--a1)}
+  .form .count{font-size:12px;color:var(--dim);text-align:right;margin:-10px 0 12px}
+  .form .btn{width:100%;justify-content:center;background:var(--grad);color:#fff}
+  .mode{font-size:12px;color:var(--dim);margin-top:12px;text-align:center}
+  .feed{display:grid;gap:10px}
+  .item{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;animation:in .4s ease}
+  @keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .vote{display:flex;flex-direction:column;align-items:center;min-width:52px;padding:8px 0;border-radius:12px;border:1px solid var(--line);background:#0a0a0e;color:var(--sub);cursor:pointer;font-family:inherit;transition:all .2s}
+  .vote:hover{border-color:var(--a1);color:var(--text)}
+  .vote.on{border-color:var(--a1);background:rgba(79,140,255,.15);color:var(--a1)}
+  .vote b{font-size:16px}
+  .vote small{font-size:10px}
+  .item .tx{flex:1;min-width:0}
+  .item .tx p{font-size:15px;font-weight:600;word-break:break-word}
+  .item .tx span{font-size:12px;color:var(--dim)}
+  .empty{color:var(--dim);text-align:center;padding:40px 0;border:1px dashed var(--line);border-radius:16px}
+  @media(max-width:860px){.req .box{grid-template-columns:1fr}.form{position:static}}
+
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:40px 0 60px;color:var(--dim);font-size:13px}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  footer a:hover{color:var(--text)}
+
+  /* qr */
+  .fab{position:fixed;right:20px;bottom:20px;z-index:60;width:52px;height:52px;border-radius:50%;background:var(--text);color:#000;border:none;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.5);font-family:inherit}
+  .modal{position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:20px}
+  .modal.open{display:flex}
+  .modal .in{background:#fff;color:#000;border-radius:28px;padding:36px;text-align:center;max-width:380px;width:100%}
+  .modal h3{font-size:24px;font-weight:800;letter-spacing:-.03em;margin-bottom:6px}
+  .modal p{color:#555;font-size:14px;margin-bottom:22px}
+  #qr{display:flex;justify-content:center;margin-bottom:18px}
+  #qr img,#qr canvas{width:240px!important;height:240px!important}
+  .modal .url{font-size:12px;color:#888;word-break:break-all}
+  .modal button{margin-top:18px;background:#000;color:#fff;border:none;border-radius:999px;padding:10px 24px;font-family:inherit;font-weight:600;cursor:pointer}
+
+  .toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);background:var(--text);color:#000;padding:12px 20px;border-radius:999px;font-weight:600;font-size:14px;opacity:0;transition:all .3s;z-index:80;pointer-events:none}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* reveal */
+  .rv{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+  .rv.on{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}.hero::before{animation:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#top" class="logo">임준형</a>
+    <div class="links">
+      <a href="#features">기능</a>
+      <a href="#release">릴리즈 노트</a>
+      <a href="#bugs">알려진 이슈</a>
+      <a href="#roadmap">로드맵</a>
+      <a href="#pricing">요금제</a>
+    </div>
+    <a href="#request" class="buy">기능 요청</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="badge"><span class="dot"></span> 지금 정식 출시 · This is ME Project</div>
+  <h1>임준형<span class="ver grad">v22.0</span></h1>
+  <p class="tag">통계로 생각하고, 코드로 만들고, 사람을 위해 기획한다.</p>
+  <p class="small">2003년 첫 출시 이후 가장 큰 업데이트.</p>
+  <div class="ctas">
+    <a href="#features" class="btn pri">자세히 알아보기</a>
+    <a href="#request" class="btn sec">기능 요청하기 ›</a>
+  </div>
+  <div class="scroll">SCROLL ↓</div>
+</header>
+
+<!-- SPEC BAR -->
+<div class="specbar">
+  <div class="wrap grid">
+    <div class="rv"><div class="k">최초 출시</div><div class="v">2003</div></div>
+    <div class="rv"><div class="k">제조</div><div class="v">가천대학교</div></div>
+    <div class="rv"><div class="k">프로세서</div><div class="v">응용통계 × 컴퓨터공학</div></div>
+    <div class="rv"><div class="k">목표 모드</div><div class="v">Product Manager</div></div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="wrap">
+    <div class="rv">
+      <div class="eyebrow">핵심 기능</div>
+      <h2>작지만 <span class="grad">꽉 찬</span> 사양.</h2>
+      <p class="lead">숫자를 읽는 머리, 만드는 손, 사람을 보는 눈을 한 몸에 탑재했습니다.</p>
+    </div>
+    <div class="grid">
+      <div class="fcard big rv">
+        <div class="ico">🧠</div>
+        <h3>듀얼코어 프로세서</h3>
+        <p>응용통계학 주전공 코어와 컴퓨터공학 복수전공 코어가 동시에 작동합니다. 데이터로 문제를 정의하고, 코드로 직접 해결책을 만듭니다. 기획서만 쓰는 PM이 아니라 만들 줄 아는 PM을 지향합니다.</p>
+        <span class="chip">Statistics + CS</span>
+      </div>
+      <div class="fcard rv">
+        <div class="ico">👵</div>
+        <h3>시니어 모드</h3>
+        <p>고령층의 취약성과 의료 서비스 이용 능력의 관계를 연구해 교내 경진대회에서 수상했습니다. 어르신을 위한 와인바 키오스크도 만들고 있어요.</p>
+        <span class="chip">Silver Tech</span>
+      </div>
+      <div class="fcard rv">
+        <div class="ico">📋</div>
+        <h3>PM 엔진</h3>
+        <p>"이거 왜 만들어요?"를 먼저 묻습니다. 사용자 문제에서 출발해 기능을 정리하고 우선순위를 정하는 데 최적화되었습니다.</p>
+        <span class="chip">Product Thinking</span>
+      </div>
+      <div class="fcard rv">
+        <div class="ico">🏋️</div>
+        <h3>크로스핏 내구성</h3>
+        <p>고강도 와드(WOD)를 견디도록 설계된 하드웨어. 마감 전날 밤샘에도 버티는 체력의 비밀입니다.</p>
+        <span class="chip">Heavy Duty</span>
+      </div>
+      <div class="fcard rv">
+        <div class="ico">🌏</div>
+        <h3>글로벌 로밍</h3>
+        <p>미국 샌디에이고 주립대(SDSU) 방문학생에 합격했습니다. 영어권 리전 확장을 준비 중입니다.</p>
+        <span class="chip">US Region</span>
+      </div>
+      <div class="fcard big rv">
+        <div class="ico">🤝</div>
+        <h3>멀티 협업 모듈</h3>
+        <p>PLAF 2기, AI 에이전트 개발 동아리, 오비맥주 맥크크 서포터즈, 팀 프로젝트까지 여러 팀과 동시에 연결됩니다. 개발자, 마케터, 기획자 누구와도 호환됩니다.</p>
+        <span class="chip">Team Player</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section class="compare">
+  <div class="wrap">
+    <div class="rv">
+      <div class="eyebrow">이전 버전과 비교</div>
+      <h2>같은 사람, <span class="grad">전혀 다른 성능.</span></h2>
+      <p class="lead">신입생 시절 v19와 비교해 보세요.</p>
+    </div>
+    <div class="ctable rv">
+      <div class="crow head"><div></div><div>v19.0 (신입생)</div><div class="new">v22.0 (현재)</div></div>
+      <div class="crow"><div class="lab">전공</div><div>응용통계</div><div class="new">응용통계 + 컴공</div></div>
+      <div class="crow"><div class="lab">사용 언어</div><div>R 조금</div><div class="new">R · Python · JS · 영어</div></div>
+      <div class="crow"><div class="lab">만든 것</div><div>과제 제출용 코드</div><div class="new">실제로 배포된 서비스</div></div>
+      <div class="crow"><div class="lab">관심 시장</div><div>미정</div><div class="new">실버산업 (고령친화)</div></div>
+      <div class="crow"><div class="lab">활동 반경</div><div>캠퍼스</div><div class="new">캠퍼스 → 미국</div></div>
+      <div class="crow"><div class="lab">데드리프트</div><div>측정 불가</div><div class="new">꾸준히 상승 중 📈</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- RELEASE NOTES -->
+<section id="release">
+  <div class="wrap">
+    <div class="rv">
+      <div class="eyebrow">릴리즈 노트</div>
+      <h2>지금까지의 <span class="grad">업데이트 내역.</span></h2>
+      <p class="lead">모든 변경 사항은 실제 사용자 환경에서 검증되었습니다.</p>
+    </div>
+    <div class="log rv">
+      <div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span>~/junhyung — zsh</span></div>
+      <div class="body">
+        <div class="cmd">$ git log --author="임준형" --oneline --decorate</div>
+
+        <div class="commit head">
+          <span class="hash">a1f2026</span>
+          <div class="msg">feat: This is ME 프로젝트 출시 <span class="tagv">HEAD → v22.0</span></div>
+          <div class="desc">지금 보고 계신 바로 이 페이지입니다. 나를 하나의 제품으로 정의해 보았습니다.</div>
+        </div>
+        <div class="commit">
+          <span class="hash">9c4e81b</span>
+          <div class="msg">feat(global): SDSU 방문학생 합격 <span class="tagv">v21.9</span></div>
+          <div class="desc">미국 샌디에이고 주립대 방문학생 합격. 영어권 리전 확장 준비 시작.</div>
+        </div>
+        <div class="commit">
+          <span class="hash">7b3d02a</span>
+          <div class="msg">feat(team): PLAF 2기 · AI 에이전트 동아리 합류 <span class="tagv">v21.8</span></div>
+          <div class="desc">AI 에이전트를 활용해 실제 서비스를 개발하는 동아리 활동 시작.</div>
+        </div>
+        <div class="commit">
+          <span class="hash">5e90c7f</span>
+          <div class="msg">feat(silver): S&amp;J 와인바 키오스크 개발 <span class="tagv">v21.5</span></div>
+          <div class="desc">고령층도 쉽게 주문할 수 있는 와인바 키오스크 웹사이트를 팀 프로젝트로 제작 중.</div>
+        </div>
+        <div class="commit">
+          <span class="hash">3a61be4</span>
+          <div class="msg">feat(marketing): 맥크크 서포터즈 활동 <span class="tagv">v21.3</span></div>
+          <div class="desc">오비맥주 서포터즈로 생맥주 매장 홍보 콘텐츠 기획 및 제작.</div>
+        </div>
+        <div class="commit">
+          <span class="hash">2f08d19</span>
+          <div class="msg">award: 교내 경진대회 수상 🏆 <span class="tagv">v21.0</span></div>
+          <div class="desc">고령층의 취약성과 의료 서비스 이용 능력의 상관관계 연구. 실버산업에 대한 관심이 여기서 시작되었습니다.</div>
+        </div>
+        <div class="commit">
+          <span class="hash">1c77a50</span>
+          <div class="msg">merge: 컴퓨터공학 복수전공 브랜치 병합 <span class="tagv">v20.0</span></div>
+          <div class="desc">분석만 하던 사람이 직접 만들기 시작했습니다. 가장 큰 아키텍처 변경.</div>
+        </div>
+        <div class="commit">
+          <span class="hash">0000022</span>
+          <div class="msg">init: 가천대학교 응용통계학과 입학 <span class="tagv">v19.0</span></div>
+          <div class="desc">2022년, 대학생 펌웨어 최초 설치.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUGS -->
+<section class="bugs" id="bugs">
+  <div class="wrap">
+    <div class="rv">
+      <div class="eyebrow">알려진 이슈</div>
+      <h2>완벽하진 않습니다. <span class="grad">솔직하니까요.</span></h2>
+      <p class="lead">투명한 운영을 위해 현재 확인된 이슈를 공개합니다.</p>
+    </div>
+    <div class="list">
+      <div class="bug rv"><div class="id">#0412</div><div class="t"><b>아침 부팅 속도 지연</b><span>오전 9시 수업 전 부팅에 평균 3회의 알람이 필요합니다.</span></div><span class="st fix">수정 예정</span></div>
+      <div class="bug rv"><div class="id">#0503</div><div class="t"><b>아이디어 과다 생성 시 발열</b><span>새 프로젝트 아이디어가 기존 일정을 초과해 생성되는 현상이 있습니다.</span></div><span class="st fix">수정 예정</span></div>
+      <div class="bug rv"><div class="id">#0717</div><div class="t"><b>와드(WOD) 직후 일시적 출력 저하</b><span>크로스핏 직후 약 1시간 동안 계단 이용이 제한됩니다.</span></div><span class="st wont">수정 안 함</span></div>
+      <div class="bug rv"><div class="id">#1027</div><div class="t"><b>마감 직전 성능 급상승</b><span>데드라인 24시간 전부터 생산성이 비정상적으로 높아집니다. 이 페이지가 증거입니다.</span></div><span class="st feat">의도된 기능</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="roadmap" id="roadmap">
+  <div class="wrap">
+    <div class="rv">
+      <div class="eyebrow">로드맵</div>
+      <h2>다음 버전은 <span class="grad">더 멀리.</span></h2>
+      <p class="lead">향후 업데이트 계획은 예고 없이 더 좋은 방향으로 변경될 수 있습니다.</p>
+    </div>
+    <div class="road">
+      <div class="stage now rv"><span class="pin"></span><div class="when">NOW</div><h3>This is ME 출시</h3><p>나를 제품으로 정의하고, 첫 공개 버전을 배포했습니다.</p></div>
+      <div class="stage rv"><span class="pin"></span><div class="when">NEXT</div><h3>US 리전 오픈</h3><p>SDSU 방문학생으로 미국 현지 환경에서 베타 테스트를 진행합니다.</p></div>
+      <div class="stage later rv"><span class="pin"></span><div class="when">LATER</div><h3>글로벌 런칭</h3><p>영어권 PM 인턴십으로 실제 프로덕트 팀에 투입됩니다.</p></div>
+      <div class="stage vision rv"><span class="pin"></span><div class="when">VISION</div><h3>실버테크 PM</h3><p>고령층이 기술 때문에 소외되지 않는 서비스를 만듭니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="rv" style="text-align:center">
+      <div class="eyebrow">요금제</div>
+      <h2>나에게 맞는 <span class="grad">임준형</span>을 선택하세요.</h2>
+      <p class="lead" style="margin:0 auto">모든 요금제에 진심이 기본 탑재되어 있습니다.</p>
+    </div>
+    <div class="plans">
+      <div class="plan rv">
+        <div class="name">Basic</div>
+        <div class="price">₩0</div>
+        <div class="per">인사 한 번이면 충분</div>
+        <ul><li>복도에서 반갑게 인사</li><li>과제 질문 답변</li><li>크로스핏 영업 무제한</li></ul>
+        <a href="#request" class="btn sec">시작하기</a>
+      </div>
+      <div class="plan hot rv">
+        <div class="name">Pro</div>
+        <div class="price">커피 한 잔</div>
+        <div class="per">아이스 아메리카노 기준</div>
+        <ul><li>Basic의 모든 기능</li><li>기획 아이디어 피드백</li><li>통계 분석 상담</li><li>밤샘 코딩 동행</li></ul>
+        <a href="#request" class="btn pri">가장 많이 선택</a>
+      </div>
+      <div class="plan rv">
+        <div class="name">Enterprise</div>
+        <div class="price">인턴 채용</div>
+        <div class="per">PM 포지션 문의 환영</div>
+        <ul><li>Pro의 모든 기능</li><li>풀타임 기획 + 개발</li><li>데이터 기반 의사결정</li><li>글로벌 리전 지원</li></ul>
+        <a href="https://github.com/happyboy412" target="_blank" rel="noopener" class="btn sec">영업팀 문의</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REQUESTS -->
+<section class="req" id="request" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="rv">
+      <div class="eyebrow">기능 요청</div>
+      <h2>v23.0에는 <span class="grad">무엇을</span> 넣을까요?</h2>
+      <p class="lead">임준형에게 추가됐으면 하는 기능을 요청해 주세요. 공감 가는 요청에는 투표할 수 있습니다. 가장 많은 표를 받은 기능은 실제로 개발(노력)됩니다.</p>
+    </div>
+    <div class="box">
+      <form class="form rv" id="reqForm" autocomplete="off">
+        <label for="reqText">요청할 기능</label>
+        <textarea id="reqText" rows="3" maxlength="80" placeholder="예) 아침형 인간 모드 추가해 주세요" required></textarea>
+        <div class="count"><span id="cnt">0</span>/80</div>
+        <label for="reqName">요청자 (선택)</label>
+        <input id="reqName" maxlength="12" placeholder="익명의 사용자" />
+        <button class="btn" type="submit">요청 보내기 🚀</button>
+        <div class="mode" id="mode"></div>
+      </form>
+      <div class="feed" id="feed"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>© 2003–2026 임준형. All rights reserved. 제조: 부모님.</div>
+    <div><a href="https://github.com/happyboy412" target="_blank" rel="noopener">GitHub @happyboy412</a> · PLAF 2기 This is ME Project</div>
+  </div>
+</footer>
+
+<button class="fab" id="qrBtn" title="발표용 QR">QR</button>
+<div class="modal" id="qrModal">
+  <div class="in">
+    <h3>임준형 v22.0 체험하기</h3>
+    <p>스캔해서 v23.0 기능을 요청해 주세요</p>
+    <div id="qr"></div>
+    <div class="url" id="qrUrl"></div>
+    <button id="qrClose">닫기</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script>
+/* =========================================================
+   실시간 공유를 원하면 Firebase 설정을 여기에 붙여넣으세요.
+   (README.md 참고) null이면 브라우저 로컬 모드로 동작합니다.
+   ========================================================= */
+const FIREBASE_CONFIG = null;
+
+/* ---------- 스크롤 등장 애니메이션 ---------- */
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
+}), { threshold: .12 });
+document.querySelectorAll('.rv').forEach((el, i) => {
+  el.style.transitionDelay = (i % 3) * 0.08 + 's';
+  io.observe(el);
+});
+
+/* ---------- 유틸 ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2000); }
+function ls(k, v){ try{ if(v===undefined) return JSON.parse(localStorage.getItem(k)); localStorage.setItem(k, JSON.stringify(v)); }catch(e){ return null; } }
+function ago(ts){
+  const s = Math.floor((Date.now()-ts)/1000);
+  if (s < 60) return '방금 전';
+  if (s < 3600) return Math.floor(s/60)+'분 전';
+  if (s < 86400) return Math.floor(s/3600)+'시간 전';
+  return Math.floor(s/86400)+'일 전';
+}
+
+/* ---------- 기능 요청 저장소 ---------- */
+let items = [];
+let voted = new Set(ls('jh_voted') || []);
+let store;
+
+const SEED = [
+  { id:'s1', text:'아침형 인간 모드 추가해 주세요', name:'룸메이트', votes:3, ts:Date.now()-3600e3 },
+  { id:'s2', text:'크로스핏 같이 가자고 그만 조르는 기능', name:'친구', votes:2, ts:Date.now()-7200e3 },
+];
+
+if (FIREBASE_CONFIG && window.firebase) {
+  firebase.initializeApp(FIREBASE_CONFIG);
+  const ref = firebase.database().ref('requests');
+  store = {
+    add: d => ref.push(d),
+    vote: id => ref.child(id + '/votes').transaction(n => (n || 0) + 1),
+  };
+  ref.on('value', snap => {
+    const v = snap.val() || {};
+    items = Object.entries(v).map(([id, o]) => ({ id, ...o }));
+    render();
+  });
+  $('#mode').textContent = '🟢 실시간 모드: 모든 사람의 요청이 바로 보여요';
+} else {
+  items = ls('jh_requests') || SEED;
+  const save = () => ls('jh_requests', items);
+  store = {
+    add: d => { items.push({ id: 'l' + Date.now(), ...d }); save(); render(); },
+    vote: id => { const it = items.find(x => x.id === id); if (it) it.votes++; save(); render(); },
+  };
+  $('#mode').textContent = '⚪ 로컬 모드: 이 브라우저에만 저장돼요';
+}
+
+function render(){
+  const feed = $('#feed');
+  const list = [...items].sort((a,b) => (b.votes||0)-(a.votes||0) || b.ts-a.ts);
+  if (!list.length) { feed.innerHTML = '<div class="empty">첫 번째 기능을 요청해 주세요!</div>'; return; }
+  feed.innerHTML = list.map(it => `
+    <div class="item">
+      <button class="vote ${voted.has(it.id)?'on':''}" data-id="${esc(it.id)}" aria-label="투표">
+        <b>${it.votes||0}</b><small>▲ 공감</small>
+      </button>
+      <div class="tx"><p>${esc(it.text)}</p><span>${esc(it.name||'익명의 사용자')} · ${ago(it.ts)}</span></div>
+    </div>`).join('');
+}
+render();
+
+$('#feed').addEventListener('click', e => {
+  const b = e.target.closest('.vote'); if (!b) return;
+  const id = b.dataset.id;
+  if (voted.has(id)) { toast('이미 공감한 요청이에요'); return; }
+  voted.add(id); ls('jh_voted', [...voted]);
+  store.vote(id);
+  toast('공감 완료! 개발팀(본인)에 전달했어요');
+});
+
+const txt = $('#reqText');
+txt.addEventListener('input', () => $('#cnt').textContent = txt.value.length);
+$('#reqForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const text = txt.value.trim();
+  if (!text) return;
+  store.add({ text: text.slice(0,80), name: $('#reqName').value.trim().slice(0,12), votes: 0, ts: Date.now() });
+  txt.value = ''; $('#cnt').textContent = '0';
+  toast('요청 접수 완료! v23.0 검토 대상에 올라갔어요 🚀');
+});
+
+setInterval(render, 60000); // '몇 분 전' 표시 갱신
+
+/* ---------- 발표용 QR ---------- */
+let qrMade = false;
+$('#qrBtn').addEventListener('click', () => {
+  const url = location.href.split('#')[0] + '#request';
+  if (!qrMade && window.QRCode) { new QRCode($('#qr'), { text: url, width: 240, height: 240 }); qrMade = true; }
+  $('#qrUrl').textContent = url;
+  $('#qrModal').classList.add('open');
+});
+$('#qrClose').addEventListener('click', () => $('#qrModal').classList.remove('open'));
+$('#qrModal').addEventListener('click', e => { if (e.target.id === 'qrModal') e.target.classList.remove('open'); });
+</script>
+</body>
+</html>

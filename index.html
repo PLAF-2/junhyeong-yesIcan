@@ -1,0 +1,1301 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>해내샵</title>
+<meta name="description" content="결제는 지금, 배송은 해냈을 때. 나의 목표 챌린지를 해내야 받을 수 있는 쇼핑몰." />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<style>
+:root{
+  --bg:#f6f5f1; --card:#fff; --ink:#16161d; --sub:#6e6e78; --dim:#a3a3ad; --line:#ebe9e3;
+  --acc:#ff5b22; --acc2:#fff0e9; --ok:#14a155; --ok2:#e6f6ec; --lock:#5b47e0; --lock2:#efedfd;
+  --bad:#e5484d; --bad2:#fdecec; --warn:#a86a10; --warn2:#fdf3e1; --r:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:#e7e5df;color:var(--ink);font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;word-break:keep-all}
+button{font:inherit;color:inherit;border:none;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+input,textarea,select{font:inherit;color:inherit}
+.frame{max-width:460px;margin:0 auto;min-height:100vh;min-height:100dvh;background:var(--bg);position:relative;padding-bottom:96px;box-shadow:0 0 50px rgba(0,0,0,.07);overflow-x:hidden}
+.frame.notab{padding-bottom:24px}
+.frame.dark{background:#111116;color:#fff}
+
+/* 공통 */
+header.bar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:8px;padding:12px 14px;background:rgba(246,245,241,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.bar h2{font-size:17px;font-weight:800;flex:1;letter-spacing:-.02em}
+.back{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:22px}
+.back:hover{background:#ebe9e3}
+.brand{font-weight:900;font-size:21px;letter-spacing:-.05em;flex:1}
+.brand i{font-style:normal;color:var(--acc)}
+.pts{font-size:13px;font-weight:800;background:var(--lock2);color:var(--lock);padding:6px 11px;border-radius:999px;white-space:nowrap}
+.pad{padding:0 16px}
+.sec{margin:26px 0 10px;font-size:16px;font-weight:800;display:flex;justify-content:space-between;align-items:baseline;gap:10px;letter-spacing:-.02em}
+.sec small{font-size:12px;font-weight:600;color:var(--sub)}
+.desc{font-size:13px;color:var(--sub);margin:-4px 0 12px}
+.card{background:var(--card);border-radius:var(--r);padding:18px;border:1px solid var(--line)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--ink);color:#fff;border-radius:14px;padding:15px 18px;font-weight:700;font-size:16px;width:100%;transition:transform .1s,opacity .2s}
+.btn:active{transform:scale(.98)}
+.btn.acc{background:var(--acc)}
+.btn.lock{background:var(--lock)}
+.btn.line{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn.sm{width:auto;padding:9px 14px;font-size:14px;border-radius:11px}
+.btn:disabled{opacity:.3;pointer-events:none}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 16px 6px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;padding:8px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:14px;font-weight:600;color:var(--sub)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.field{display:block;margin-bottom:12px}
+.field span{display:block;font-size:13px;font-weight:600;color:var(--sub);margin-bottom:6px}
+.inp{width:100%;background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 14px;font-size:16px;outline:none}
+.inp:focus{border-color:var(--ink)}
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px}
+.tag.lock{background:var(--lock2);color:var(--lock)}
+.tag.ok{background:var(--ok2);color:var(--ok)}
+.tag.bad{background:var(--bad2);color:var(--bad)}
+.tag.warn{background:var(--warn2);color:var(--warn)}
+.tag.acc{background:var(--acc2);color:var(--acc)}
+.won{font-variant-numeric:tabular-nums}
+
+/* 탭바 */
+#tabs{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(460px,100%);z-index:30;display:grid;grid-template-columns:repeat(3,1fr);background:rgba(255,255,255,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:8px 0 calc(8px + env(safe-area-inset-bottom))}
+#tabs button{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:700;color:var(--dim);padding:4px 0}
+#tabs button b{font-size:21px;font-weight:400;filter:grayscale(1);opacity:.55}
+#tabs button.on{color:var(--ink)}
+#tabs button.on b{filter:none;opacity:1}
+#tabs .badge{position:relative}
+#tabs .badge i{position:absolute;top:-2px;right:-10px;background:var(--acc);color:#fff;font-style:normal;font-size:10px;font-weight:800;border-radius:999px;padding:0 5px;line-height:16px}
+
+/* 랜딩 */
+.land{padding:20px 20px 40px}
+.land .top{display:flex;align-items:center}
+.hero{text-align:center;padding:56px 0 36px}
+.hero .lk{font-size:64px;display:inline-block;animation:wob 2.8s ease-in-out infinite}
+@keyframes wob{0%,100%{transform:rotate(0)}10%{transform:rotate(-10deg)}20%{transform:rotate(8deg)}30%{transform:rotate(0)}}
+.hero h1{font-size:38px;font-weight:900;letter-spacing:-.05em;line-height:1.18;margin:18px 0 14px}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.hero p{color:var(--sub);font-size:16px;margin-bottom:30px}
+.steps{display:grid;gap:10px;margin:8px 0 28px}
+.step{display:flex;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.step .n{width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:800;font-size:14px;flex-shrink:0}
+.step b{display:block;font-size:15px}
+.step span{font-size:13px;color:var(--sub)}
+.story{background:var(--ink);color:#fff;border-radius:22px;padding:24px 22px}
+.story p{font-size:15px;line-height:1.75;opacity:.92}
+.story .by{margin-top:14px;font-size:13px;opacity:.6}
+
+/* 온보딩 */
+.ob{padding:8px 16px 30px}
+.ob h1{font-size:26px;font-weight:900;letter-spacing:-.04em;line-height:1.3;margin:10px 0 6px}
+.ob p.s{color:var(--sub);font-size:15px;margin-bottom:22px}
+.dots{display:flex;gap:6px;padding:4px 16px}
+.dots i{height:4px;flex:1;border-radius:9px;background:#dedbd3}
+.dots i.on{background:var(--ink)}
+.who{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px}
+.who button{background:#fff;border:2px solid var(--line);border-radius:18px;padding:20px 14px;text-align:center}
+.who button.on{border-color:var(--ink)}
+.who button .e{font-size:34px}
+.who button b{display:block;margin-top:6px;font-size:15px}
+.who button span{font-size:12px;color:var(--sub)}
+.goal{background:#fff;border:2px solid var(--line);border-radius:18px;margin-bottom:10px;overflow:hidden;transition:border-color .2s}
+.goal.on{border-color:var(--ink)}
+.goal .h{display:flex;align-items:center;gap:12px;padding:14px 16px;width:100%;text-align:left}
+.goal .h .e{font-size:26px}
+.goal .h b{flex:1;font-size:16px}
+.goal .h .ck{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:13px;color:#fff}
+.goal.on .h .ck{background:var(--ink);border-color:var(--ink)}
+.goal .f{display:none;padding:0 16px 16px;gap:10px;grid-template-columns:1fr 1fr}
+.goal.on .f{display:grid}
+.goal .f label span{font-size:12px;color:var(--sub);font-weight:600;display:block;margin-bottom:4px}
+.goal .f .u{position:relative}
+.goal .f .u em{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-style:normal;font-size:14px;color:var(--sub)}
+.goal .f .inp{padding:11px 12px}
+.goal .f .full{grid-column:1/-1}
+.bucket{display:flex;gap:8px;margin-bottom:10px}
+.blist{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.blist span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 8px 6px 12px;font-size:14px;display:inline-flex;align-items:center;gap:4px}
+.blist span button{color:var(--dim);font-size:15px;padding:0 4px}
+.sticky{position:sticky;bottom:0;padding:14px 16px calc(14px + env(safe-area-inset-bottom));background:linear-gradient(transparent,var(--bg) 26%);z-index:10}
+
+/* 쇼핑 */
+.banner{margin:6px 16px 4px;background:var(--ink);color:#fff;border-radius:22px;padding:22px 20px;position:relative;overflow:hidden}
+.banner h3{font-size:22px;font-weight:900;letter-spacing:-.04em;line-height:1.3}
+.banner h3 em{font-style:normal;color:#ff8a5c}
+.banner p{font-size:13px;opacity:.7;margin-top:6px}
+.banner .lk{position:absolute;right:16px;bottom:-8px;font-size:72px;opacity:.9;transform:rotate(-12deg)}
+.active{margin:12px 16px 0;display:flex;align-items:center;gap:12px;background:var(--lock2);color:var(--lock);border-radius:16px;padding:14px 16px;font-weight:700;font-size:14px;width:calc(100% - 32px);text-align:left}
+.active span{flex:1}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px}
+.prod{background:#fff;border-radius:18px;border:1px solid var(--line);overflow:hidden;text-align:left;display:flex;flex-direction:column;transition:transform .15s}
+.prod:active{transform:scale(.98)}
+.prod .img{aspect-ratio:1/.82;display:grid;place-items:center;font-size:58px;position:relative}
+.prod .img .tier{position:absolute;top:10px;left:10px}
+.prod .tx{padding:12px 13px 14px}
+.prod .tx b{display:block;font-size:14px;font-weight:600;line-height:1.35;min-height:38px}
+.prod .tx .p{font-size:17px;font-weight:900;margin-top:6px;letter-spacing:-.02em}
+.prod .tx small{display:block;font-size:12px;color:var(--sub);margin-top:2px}
+.prod.add .img{background:repeating-linear-gradient(45deg,#f2f0ea,#f2f0ea 8px,#f7f5f0 8px,#f7f5f0 16px);font-size:40px;color:var(--sub)}
+
+/* 상품 설정 */
+.phead{display:flex;gap:16px;align-items:center;padding:4px 16px 0}
+.phead .img{width:92px;height:92px;border-radius:22px;display:grid;place-items:center;font-size:52px;flex-shrink:0}
+.phead b{display:block;font-size:18px;line-height:1.35;letter-spacing:-.02em}
+.phead .p{font-size:22px;font-weight:900;margin-top:4px;letter-spacing:-.03em}
+.durs{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.durs .grp{grid-column:1/-1;font-size:12px;font-weight:700;color:var(--sub);margin-top:4px}
+/* 자유 입력 목표 */
+.ex{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.ex button{font-size:13px;font-weight:600;color:var(--sub);background:#fff;border:1px dashed #cfccc3;border-radius:999px;padding:6px 11px}
+.ex button:hover{color:var(--ink);border-color:var(--ink)}
+.ta{width:100%;min-height:118px;background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:14px;font-size:16px;line-height:1.6;resize:vertical;outline:none}
+.ta:focus{border-color:var(--ink)}
+.og{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px 14px 12px;margin-bottom:8px;animation:fadeup .3s ease}
+.og .tp{display:flex;align-items:center;gap:8px}
+.og .tp .e{font-size:24px}
+.og .tp .x{margin-left:auto;color:var(--dim);font-size:20px;width:30px;height:30px;border-radius:50%}
+.og .tp .x:hover{background:var(--bg);color:var(--ink)}
+.og > b{display:block;font-size:17px;font-weight:800;margin:8px 0 2px;letter-spacing:-.02em}
+.og .raw{font-size:12px;color:var(--dim)}
+.og .f{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.og .f label span{font-size:11px;color:var(--sub);font-weight:600;display:block;margin-bottom:3px}
+.og .f .u{position:relative}
+.og .f .u em{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-style:normal;font-size:13px;color:var(--sub)}
+.og .f .inp{padding:9px 11px;font-size:15px}
+.og .f .full{grid-column:1/-1}
+.cand .rd{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);flex-shrink:0;margin-top:1px;position:relative}
+.cand.on .rd{border-color:var(--acc)}
+.cand.on .rd::after{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--acc)}
+.cand .math{font-size:12px;color:var(--sub);margin-top:4px}
+.wchip{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;margin-top:8px;font-size:12px;font-weight:600;color:var(--warn);background:var(--warn2);border-radius:10px;padding:8px 10px;line-height:1.45}
+.wchip.safe{color:var(--ok);background:var(--ok2)}
+.wchip button{font-size:12px;font-weight:800;text-decoration:underline;color:inherit}
+.mi.locked{opacity:.55}
+.mi.final{border-style:dashed;border-width:1.5px}
+.dur{background:#fff;border:2px solid var(--line);border-radius:14px;padding:12px 6px;text-align:center}
+.dur b{display:block;font-size:15px}
+.dur span{font-size:11px;color:var(--sub)}
+.dur.on{border-color:var(--ink);background:var(--ink);color:#fff}
+.dur.on span{color:#c9c9d1}
+.dur:disabled{opacity:.4;cursor:not-allowed;background:#f2f0ea}
+.effort{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin-top:12px}
+.effort .eq{font-size:13px;color:var(--sub)}
+.effort .big{font-size:22px;font-weight:900;letter-spacing:-.03em;margin:4px 0 12px}
+.effort .big em{font-style:normal;color:var(--acc)}
+.meter{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.meter i{height:8px;border-radius:4px;background:#ece9e2}
+.meter i.on{background:var(--acc)}
+.meter-l{display:flex;justify-content:space-between;font-size:12px;color:var(--sub);margin-top:8px}
+.meter-l b{color:var(--ink)}
+.rule{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--sub);margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.mode{background:#fff;border:2px solid var(--line);border-radius:16px;padding:14px 8px;text-align:center}
+.mode .e{font-size:26px}
+.mode b{display:block;font-size:14px;margin-top:2px}
+.mode span{font-size:11px;color:var(--sub);line-height:1.35;display:block;margin-top:2px}
+.mode.on{border-color:var(--ink)}
+.partner{margin-top:10px;display:grid;gap:8px}
+.cands{display:grid;gap:8px}
+.cand{background:#fff;border:2px solid var(--line);border-radius:16px;padding:14px 14px 14px 16px;display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;transition:border-color .15s}
+.cand.on{border-color:var(--acc);background:#fffaf7}
+.cand .c{flex:1;min-width:0}
+.cand .c b{display:block;font-size:15px;line-height:1.4}
+.cand .c span{font-size:12px;color:var(--sub)}
+.cand .ck{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);flex-shrink:0;display:grid;place-items:center;font-size:12px;color:#fff;font-weight:800;margin-top:1px}
+.cand.on .ck{background:var(--acc);border-color:var(--acc)}
+.cand.off{opacity:.45}
+.adj{display:flex;gap:6px;align-items:flex-start;margin-top:8px;font-size:12px;font-weight:600;color:var(--warn);background:var(--warn2);border-radius:10px;padding:7px 10px;line-height:1.45}
+.vrow{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:8px}
+.vrow > b{display:block;font-size:14px;margin-bottom:10px}
+.vopts{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.vopt{border:1.5px solid var(--line);border-radius:12px;padding:8px 2px;text-align:center;font-size:11px;font-weight:700;color:var(--sub);line-height:1.3}
+.vopt i{display:block;font-style:normal;font-size:19px;margin-bottom:2px}
+.vopt.on{border-color:var(--ink);color:var(--ink);background:#f7f6f2}
+.vopt:disabled{opacity:.35;cursor:not-allowed;text-decoration:line-through}
+.paybar{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px 12px 12px 16px;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+.paybar .t{flex:1;min-width:0}
+.paybar .t small{display:block;font-size:12px;color:var(--sub)}
+.paybar .t b{font-size:19px;font-weight:900;letter-spacing:-.03em}
+.paybar .btn{width:auto;padding:14px 18px}
+.usept{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;margin-bottom:8px;color:var(--lock)}
+.usept input{width:18px;height:18px;accent-color:var(--lock)}
+
+/* 결제 */
+.pay{padding:8px 16px}
+.receipt{background:#fff;border-radius:20px;border:1px solid var(--line);padding:20px}
+.receipt .r{display:flex;justify-content:space-between;gap:12px;font-size:14px;padding:7px 0}
+.receipt .r span{color:var(--sub)}
+.receipt .r b{text-align:right}
+.receipt hr{border:none;border-top:1px dashed var(--line);margin:8px 0}
+.receipt .tot b{font-size:20px;font-weight:900}
+.policy{margin-top:12px;background:var(--lock2);color:#3b2fa3;border-radius:16px;padding:16px;font-size:13px;line-height:1.7}
+.policy b{color:var(--lock)}
+.demo-note{font-size:12px;color:var(--dim);text-align:center;margin-top:10px}
+.paying{position:fixed;inset:0;z-index:60;background:rgba(17,17,22,.85);display:grid;place-items:center;color:#fff;text-align:center}
+.paying .lk{font-size:72px;animation:drop .6s cubic-bezier(.3,1.6,.6,1)}
+@keyframes drop{from{transform:translateY(-60px) scale(.6);opacity:0}to{transform:none;opacity:1}}
+.paying b{display:block;font-size:22px;margin-top:10px}
+.paying span{opacity:.7;font-size:14px}
+
+/* 챌린지 목록 */
+.plist{display:grid;gap:10px;padding:0 16px}
+.pcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;gap:14px;align-items:center;text-align:left;width:100%}
+.ring{--p:0;width:64px;height:64px;border-radius:50%;background:conic-gradient(var(--c,var(--lock)) calc(var(--p)*1%),#eceae4 0);display:grid;place-items:center;flex-shrink:0}
+.ring > div{width:52px;height:52px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:28px;position:relative}
+.ring > div i{position:absolute;bottom:-4px;right:-4px;font-size:16px;font-style:normal}
+.pcard .tx{flex:1;min-width:0}
+.pcard .tx b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcard .tx span{font-size:12px;color:var(--sub)}
+.empty{text-align:center;color:var(--sub);padding:50px 20px;font-size:15px}
+.empty .e{font-size:44px;margin-bottom:10px}
+
+/* 보드 */
+.bhead{text-align:center;padding:4px 16px 0}
+.bhead .ring{width:132px;height:132px;margin:6px auto 0}
+.bhead .ring > div{width:112px;height:112px;font-size:58px}
+.bhead .ring > div i{font-size:30px;bottom:0;right:0}
+.bhead h1{font-size:20px;font-weight:800;margin-top:14px;letter-spacing:-.02em}
+.bhead .meta{font-size:13px;color:var(--sub);margin-top:4px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:18px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 8px;text-align:center}
+.kpi span{font-size:12px;color:var(--sub)}
+.kpi b{display:block;font-size:20px;font-weight:900;letter-spacing:-.03em}
+.alert{margin-top:12px;border-radius:14px;padding:12px 14px;font-size:13px;font-weight:600;line-height:1.5}
+.alert.bad{background:var(--bad2);color:var(--bad)}
+.alert.ok{background:var(--ok2);color:var(--ok)}
+.versus{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:12px}
+.versus h4{font-size:14px;font-weight:800;margin-bottom:12px;display:flex;justify-content:space-between}
+.versus h4 span{font-size:12px;color:var(--sub);font-weight:600}
+.vsrow{display:grid;grid-template-columns:62px 1fr 44px;gap:10px;align-items:center;font-size:14px;font-weight:700;margin-bottom:8px}
+.vsrow .bar{height:12px;background:#eeece6;border-radius:99px;overflow:hidden}
+.vsrow .bar i{display:block;height:100%;border-radius:99px;transition:width .5s}
+.vsrow em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums}
+.wager{font-size:13px;color:var(--sub);margin-top:6px;padding-top:10px;border-top:1px dashed var(--line)}
+.seg{display:flex;background:#ebe9e3;border-radius:12px;padding:3px;margin-top:4px}
+.seg button{flex:1;padding:9px;border-radius:10px;font-size:14px;font-weight:700;color:var(--sub)}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.miss{display:grid;gap:8px}
+.mi{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;align-items:center;gap:12px}
+.mi .c{flex:1;min-width:0}
+.mi .c b{display:block;font-size:15px;line-height:1.4}
+.mi .c span{font-size:12px;color:var(--sub)}
+.mi .act{flex-shrink:0}
+.mi.done{background:var(--ok2);border-color:#c8ebd5}
+.mi .ph{width:46px;height:46px;border-radius:12px;object-fit:cover;flex-shrink:0;border:2px solid #fff}
+.mi .dn{width:46px;height:46px;border-radius:12px;background:var(--ok);color:#fff;display:grid;place-items:center;font-size:20px;flex-shrink:0}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal i{aspect-ratio:1;border-radius:9px;background:#ebe9e3;display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:700;color:var(--dim)}
+.cal i.ok{background:var(--ok);color:#fff}
+.cal i.part{background:#fde5b8;color:var(--warn)}
+.cal i.miss{background:var(--bad2);color:var(--bad)}
+.cal i.today{outline:2px solid var(--ink);outline-offset:1px;background:#fff;color:var(--ink)}
+.legend{display:flex;gap:12px;font-size:11px;color:var(--sub);margin-top:10px;flex-wrap:wrap}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.demo{margin-top:22px;border:1.5px dashed #cfccc3;border-radius:18px;padding:14px}
+.demo b{font-size:13px;display:block;margin-bottom:10px;color:var(--sub)}
+.demo .row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.demo .row .btn{font-size:12px;padding:10px 4px;border-radius:10px}
+.goalnote{margin-top:16px;font-size:13px;color:var(--sub);text-align:center}
+
+/* 결과 */
+.res{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 22px}
+.res .stage{position:relative;width:170px;height:170px;margin-bottom:26px}
+.res .stage .it{position:absolute;inset:0;display:grid;place-items:center;font-size:96px;transform:scale(.2);opacity:0}
+.res .stage .lkk{position:absolute;inset:0;display:grid;place-items:center;font-size:96px}
+.res.win .stage .lkk{animation:shake .9s ease, vanish .4s ease .9s forwards}
+.res.win .stage .it{animation:pop .7s cubic-bezier(.3,1.7,.5,1) 1.2s forwards}
+@keyframes shake{0%,100%{transform:rotate(0)}15%{transform:rotate(-14deg)}30%{transform:rotate(12deg)}45%{transform:rotate(-10deg)}60%{transform:rotate(8deg)}75%{transform:rotate(-4deg)}}
+@keyframes vanish{to{transform:scale(1.8);opacity:0}}
+@keyframes pop{to{transform:scale(1);opacity:1}}
+.res .stage .glow{position:absolute;inset:-30px;border-radius:50%;background:radial-gradient(circle,rgba(255,180,80,.55),transparent 65%);opacity:0;animation:fadein .6s ease 1.2s forwards}
+@keyframes fadein{to{opacity:1}}
+.res .lab{opacity:0;animation:fadein .5s ease 1.5s forwards}
+.res h1{font-size:34px;font-weight:900;letter-spacing:-.05em;margin:12px 0 8px}
+.res p{color:#c4c4cc;font-size:15px;line-height:1.65}
+.res .box{background:rgba(255,255,255,.07);border-radius:18px;padding:16px;margin-top:20px;width:100%;max-width:360px;font-size:14px;text-align:left;line-height:1.7}
+.res .box b{color:#fff}
+.res .acts{display:grid;gap:8px;width:100%;max-width:360px;margin-top:22px}
+.res .btn.line{background:transparent;color:#fff;border-color:#3a3a44}
+.res.lose .stage .lkk{animation:none}
+.res.lose .stage .it{animation:none;opacity:1;transform:scale(1)}
+.coin{font-size:96px;display:block;animation:spin 1.6s ease}
+@keyframes spin{from{transform:rotateY(0)}to{transform:rotateY(720deg)}}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:70;overflow:hidden}
+.confetti i{position:absolute;top:-20px;width:9px;height:14px;border-radius:2px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+
+/* 마이 */
+.prof{display:flex;align-items:center;gap:14px;padding:6px 16px 0}
+.prof .av{width:58px;height:58px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:24px;font-weight:800}
+.prof b{display:block;font-size:20px;font-weight:800}
+.prof span{font-size:13px;color:var(--sub)}
+.wallet{margin:16px 16px 0;background:linear-gradient(135deg,#5b47e0,#8b5cf6);color:#fff;border-radius:22px;padding:20px}
+.wallet span{font-size:13px;opacity:.8}
+.wallet b{display:block;font-size:30px;font-weight:900;letter-spacing:-.03em;margin:2px 0 6px}
+.wallet p{font-size:12px;opacity:.8;line-height:1.55}
+.glist{display:grid;gap:8px}
+.gl{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;gap:10px;align-items:center;font-size:14px}
+.gl .e{font-size:20px}
+.hist{display:grid;gap:8px}
+.danger{color:var(--bad);font-size:13px;font-weight:600;padding:10px;width:100%;margin-top:24px}
+
+/* 승인 */
+.ap{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;justify-content:center;padding:30px 20px;text-align:center}
+.ap .card{padding:26px 22px}
+.ap .e{font-size:54px}
+.ap h1{font-size:22px;font-weight:900;letter-spacing:-.03em;margin:10px 0 6px;line-height:1.35}
+.ap .q{background:var(--bg);border-radius:14px;padding:14px;margin:16px 0;font-size:15px;font-weight:700}
+.ap .q small{display:block;font-size:12px;color:var(--sub);font-weight:600;margin-bottom:4px}
+.code{font-size:48px;font-weight:900;letter-spacing:.2em;margin:10px 0;color:var(--lock);font-variant-numeric:tabular-nums}
+
+/* 시트 */
+#sheet{position:fixed;inset:0;z-index:50;display:none}
+#sheet.on{display:block}
+#sheet .dim{position:absolute;inset:0;background:rgba(0,0,0,.45);animation:fadein .2s forwards;opacity:0}
+#sheet .pn{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:min(460px,100%);background:#fff;border-radius:24px 24px 0 0;padding:10px 20px calc(24px + env(safe-area-inset-bottom));animation:up .25s ease}
+@keyframes up{from{transform:translate(-50%,100%)}to{transform:translate(-50%,0)}}
+#sheet .grab{width:40px;height:5px;border-radius:9px;background:#e1ded6;margin:0 auto 16px}
+#sheet h3{font-size:19px;font-weight:800;margin-bottom:6px;letter-spacing:-.02em}
+#sheet p{font-size:14px;color:var(--sub);margin-bottom:16px;line-height:1.6}
+.linkbox{background:var(--bg);border-radius:12px;padding:12px;font-size:12px;color:var(--sub);word-break:break-all;margin-bottom:10px;max-height:64px;overflow:hidden}
+.coderow{display:flex;gap:8px;margin-top:14px}
+.coderow .inp{text-align:center;font-size:22px;letter-spacing:.3em;font-weight:800}
+.emojis{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.emojis button{width:42px;height:42px;border-radius:12px;font-size:22px;border:1.5px solid var(--line)}
+.emojis button.on{border-color:var(--ink);background:var(--bg)}
+
+#toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%) translateY(10px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:999px;font-weight:600;font-size:14px;opacity:0;transition:all .25s;z-index:90;pointer-events:none;max-width:90vw;text-align:center}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.fade{animation:fadeup .35s ease}
+@keyframes fadeup{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-delay:0s!important;transition:none!important}.res .stage .it,.res .lab{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="frame" id="frame"><div id="app"></div></div>
+<nav id="tabs">
+  <button data-a="tab" data-t="shop"><b>🛍️</b>쇼핑</button>
+  <button data-a="tab" data-t="plans"><b class="badge">🔒<i id="tabN" hidden></i></b>내 챌린지</button>
+  <button data-a="tab" data-t="my"><b>🙂</b>마이</button>
+</nav>
+<div id="sheet"><div class="dim" data-a="closeSheet"></div><div class="pn" id="sheetPn"></div></div>
+<div id="toast"></div>
+<input type="file" id="file" accept="image/*" hidden />
+
+<script>
+/* =====================================================================
+   해내샵 — 결제는 지금, 배송은 해냈을 때
+   데이터는 이 브라우저(localStorage)에 저장됩니다.
+   ===================================================================== */
+
+/* ---------- 상품 ---------- */
+const PRODUCTS = [
+  { id:'p1',  e:'🍰', n:'카페 디저트 세트',            price:12000,   cat:'먹거리', bg:'#fdeee6' },
+  { id:'p2',  e:'🍗', n:'바삭 치킨 한 마리',           price:23000,   cat:'먹거리', bg:'#fdf1dc' },
+  { id:'p3',  e:'📚', n:'읽고 싶던 책 3권 세트',       price:48000,   cat:'취미',   bg:'#e9f0fb' },
+  { id:'p4',  e:'🧸', n:'블록 장난감 대형 세트',       price:59000,   cat:'키즈',   bg:'#fde8ec' },
+  { id:'p5',  e:'👟', n:'쿠션 러닝화',                 price:139000,  cat:'패션',   bg:'#e8f6ee' },
+  { id:'p6',  e:'🧥', n:'경량 겨울 패딩',              price:199000,  cat:'패션',   bg:'#eceaf8' },
+  { id:'p7',  e:'🎧', n:'노이즈캔슬링 무선 이어폰',    price:289000,  cat:'전자기기', bg:'#eef0f3' },
+  { id:'p8',  e:'⌚', n:'스마트워치',                  price:329000,  cat:'전자기기', bg:'#e6f3f6' },
+  { id:'p9',  e:'🎮', n:'휴대용 게임기',               price:398000,  cat:'취미',   bg:'#fbe9e9' },
+  { id:'p10', e:'🏋️', n:'크로스핏 3개월 등록권',       price:450000,  cat:'취미',   bg:'#f3eee6' },
+  { id:'p11', e:'✈️', n:'주말 여행 항공권',            price:650000,  cat:'취미',   bg:'#e7f0fd' },
+  { id:'p12', e:'💻', n:'태블릿 PC',                   price:799000,  cat:'전자기기', bg:'#efefef' },
+  { id:'p13', e:'👜', n:'명품 가방',                   price:2400000, cat:'패션',   bg:'#f6efe4' },
+];
+const CATS = ['전체','먹거리','취미','패션','전자기기','키즈'];
+
+/* ---------- 가격 등급 (이름표만, 기간 제한 없음) ---------- */
+const TIERS = [
+  { max:30000,    name:'가벼운 보상' },
+  { max:150000,   name:'적당한 보상' },
+  { max:500000,   name:'큰 보상' },
+  { max:Infinity, name:'인생템' },
+];
+// 빠른 선택 버튼. 그 밖의 기간은 직접 입력
+const DURS = [1, 3, 7, 14, 30, 90];
+const dLabel = d => d === 1 ? '내일' : d % 30 === 0 ? `${d / 30}달` : d % 7 === 0 ? `${d / 7}주` : `${d}일`;
+const MAX_DAYS = 365;
+// 목표에 기간이 있으면(감량·저축·완독) 그 기간을 일수로
+const goalDays = g => { if (!g || !['weight','save','books'].includes(g.kind)) return null;
+  const v = g.v; return Math.min(MAX_DAYS, Math.max(1, Math.round(moOf(v, g.kind === 'books' ? 1 : 3) * 30))); };
+// 하루치 노력(가격÷기간) → 난이도 → 성공해야 하는 날의 비율
+const LEVELS = [
+  { max:5000,     name:'여유롭게',   thr:.6 },
+  { max:15000,    name:'적당히',     thr:.7 },
+  { max:40000,    name:'빡세게',     thr:.8 },
+  { max:100000,   name:'매우 빡세게', thr:.9 },
+  { max:Infinity, name:'지옥 모드',   thr:1  },
+];
+
+/* ---------- 성공 보너스: 사진·앱 기록 인증 + 데이터 활용 동의 시 ---------- */
+const BONUS = 1000;
+const bonusOK = v => v === 'photo' || v === 'app';
+
+/* ---------- 인증 방식 (모두 선택 가능) ---------- */
+const VERIFY = {
+  self:  { e:'✅', n:'셀프 체크' },
+  photo: { e:'📸', n:'사진 인증' },
+  app:   { e:'🏃', n:'앱 기록' },
+  guard: { e:'🤝', n:'승인 요청' },
+};
+
+/* ---------- 숫자 도우미 ---------- */
+const r1 = n => Math.round(n*10)/10;
+const won = n => '₩' + Math.round(n).toLocaleString('ko-KR');
+const num = n => Math.round(n).toLocaleString('ko-KR');
+const per = mo => { mo = +mo || 0; return mo < 1 ? `${Math.round(mo * 30)}일` : `${r1(mo)}개월`; };
+// 기간: { pn: 숫자, pu: '일'|'주'|'개월' }  (예전 데이터의 months도 읽음)
+const PU = { '일':1/30, '주':7/30, '개월':1 };
+const moOf = (v, d) => v.pn != null && v.pn !== '' ? pos(v.pn, 1) * (PU[v.pu] || 1) : pos(v.months, d);
+const perOf = (v, d) => v.pn != null && v.pn !== '' ? `${pos(v.pn, 1)}${v.pu === '개월' ? '개월' : v.pu}` : per(pos(v.months, d));
+const dur = m => { m = Math.round(m); const h = Math.floor(m/60), mm = m%60; return h ? `${h}시간${mm ? ` ${mm}분` : ''}` : `${mm}분`; };
+const cTitle = (v, n) => v.tpl ? v.tpl.replace('{n}', n) : `매일 ${v.act || '운동'} ${n}${v.unit || '개'}`;
+const pos = (v, d) => { const x = parseFloat(v); return isFinite(x) && x > 0 ? x : d; };
+
+/* =====================================================================
+   목표 종류: 사용자가 적은 목표를 '기간'에 맞게 환산만 합니다.
+   목표 자체는 바꾸지 않고, 무리해 보이면 경고 + 낮출지 '선택'하게 합니다.
+   ===================================================================== */
+const KINDS = {
+  weight: { e:'⚖️', n:'체중 감량', f:[{k:'total',l:'목표 감량',u:'kg'},{k:'p',l:'기간',t:'period'}],
+    sum: v => `${perOf(v, 3)} 안에 ${v.total}kg 감량`,
+    ch(v, D, safe){
+      const tot = pos(v.total, 5), mo = moOf(v, 3), pace = tot / (mo * 4.345);
+      let amt = r1(Math.max(.1, tot * D / (mo * 30)));
+      const low = safe && pace > 1;
+      if (low) amt = r1(Math.max(.1, D / 7));
+      return { t:`${D}일 동안 ${amt}kg 감량`, s:'매일 아침 체중 기록 · 마지막 날 최종 인증', v:'photo',
+        math: low ? `권장 페이스 주 1kg → ${D}일치 = ${amt}kg` : `${tot}kg ÷ ${perOf(v, 3)} → ${D}일치 = ${amt}kg`, final:`🏁 ${amt}kg 감량 달성 체중계 인증`,
+        warn: pace > 1 ? { m:`주 ${r1(pace)}kg씩 빼는 페이스예요. 건강을 생각하면 주 1kg 이하를 권장해요.`, b:'주 1kg로 낮추기' } : null };
+    } },
+  save: { e:'💰', n:'돈 모으기', f:[{k:'total',l:'모을 금액',u:'원'},{k:'p',l:'기간',t:'period'}],
+    sum: v => (v.pu === '일' && +v.pn === 1) ? `하루 ${num(pos(v.total,0))}원씩 모으기` : `${perOf(v, 3)} 동안 ${num(pos(v.total,0))}원 모으기`,
+    ch(v, D){
+      const tot = pos(v.total, 1e6), mo = moOf(v, 3), daily = Math.max(100, Math.round(tot / (mo * 30) / 100) * 100);
+      return { t:`${D}일 동안 ${num(daily * D)}원 모으기`, s:`하루 ${num(daily)}원씩 저금 · 이체 내역 캡처`, v:'app',
+        math:`${num(tot)}원 ÷ ${perOf(v, 3)} → 하루 ${num(daily)}원` };
+    } },
+  spend: { e:'💸', n:'지출 줄이기', f:[{k:'limit',l:'하루 최대 지출',u:'원'}],
+    sum: v => `하루 ${num(pos(v.limit,0))}원 이하로 쓰기`,
+    ch(v, D){ const l = pos(v.limit, 20000); return { t:`하루 ${num(l)}원 이하로 쓰기`, s:'결제 내역 캡처', v:'app', math:`${D}일 동안 매일` }; } },
+  words: { e:'🔤', n:'단어 외우기', f:[{k:'lang',l:'언어',t:'text'},{k:'n',l:'하루 목표',u:'개'}],
+    sum: v => `${v.lang || '영어'} 단어 하루 ${v.n}개`,
+    ch(v, D, safe){
+      const raw = pos(v.n, 30), n = safe && raw > 150 ? 100 : raw;
+      return { t:`${v.lang || '영어'} 단어 하루 ${n}개`, s:'단어장 사진', v:'photo', math:`${D}일 동안 총 ${num(n * D)}개`,
+        warn: raw > 150 ? { m:`하루 ${raw}개는 기억에 남기 어려울 수 있어요.`, b:'하루 100개로 낮추기' } : null };
+    } },
+  time: { e:'⏱️', n:'시간 투자', f:[{k:'act',l:'무엇을',t:'text'},{k:'min',l:'하루',u:'분'}],
+    sum: v => `매일 ${v.act || '공부'} ${dur(pos(v.min,60))}`,
+    ch(v, D, safe){
+      const raw = pos(v.min, 60), m = safe && raw > 480 ? 360 : raw;
+      return { t:`매일 ${v.act || '공부'} ${dur(m)}`, s:'타이머·스톱워치 캡처', v:'photo', math:`${D}일 동안 총 ${dur(m * D)}`,
+        warn: raw > 480 ? { m:`하루 ${dur(raw)}은 오래 버티기 어려울 수 있어요.`, b:'하루 6시간으로 낮추기' } : null };
+    } },
+  limit: { e:'⏳', n:'줄이기', f:[{k:'act',l:'무엇을',t:'text'},{k:'min',l:'하루 최대',u:'분'}],
+    sum: v => `${v.act || '폰'} 하루 ${dur(pos(v.min,30))}까지만`,
+    ch(v, D){ return { t:`${v.act || '폰'} 하루 ${dur(pos(v.min, 30))}까지만`, s:'스크린타임 캡처', v:'app', math:`${D}일 동안 매일` }; } },
+  run: { e:'🏃', n:'러닝', f:[{k:'km',l:'하루',u:'km'}],
+    sum: v => `매일 ${v.km}km 달리기`,
+    ch(v, D, safe){
+      const raw = pos(v.km, 3), k = safe && raw > 15 ? 10 : raw;
+      return { t:`매일 ${k}km 달리기`, s:'나이키 런 등 러닝 앱 기록', v:'app', math:`${D}일 동안 총 ${r1(k * D)}km`,
+        warn: raw > 15 ? { m:`매일 ${raw}km는 부상 위험이 커요.`, b:'하루 10km로 낮추기' } : null };
+    } },
+  wake: { e:'⏰', n:'일찍 일어나기', f:[{k:'time',l:'기상 시간',t:'time'}],
+    sum: v => `매일 ${v.time || '07:00'} 기상`,
+    ch(v, D, safe){
+      const raw = v.time || '07:00', t = safe && raw < '05:00' ? '05:00' : raw;
+      return { t:`매일 ${t} 전에 일어나기`, s:'일어나자마자 시계와 함께 사진', v:'photo', math:`${D}일 동안 매일`,
+        warn: raw < '05:00' ? { m:'새벽 5시 전 기상은 수면이 부족해지기 쉬워요.', b:'5시로 늦추기' } : null };
+    } },
+  pages: { e:'📖', n:'독서', f:[{k:'p',l:'하루',u:'쪽'}],
+    sum: v => `매일 책 ${v.p}쪽`,
+    ch(v, D){ const p = pos(v.p, 20); return { t:`매일 책 ${p}쪽 읽기`, s:'읽은 페이지 사진', v:'photo', math:`${D}일 동안 총 ${num(p * D)}쪽` }; } },
+  books: { e:'📚', n:'책 완독', f:[{k:'n',l:'목표',u:'권'},{k:'p',l:'기간',t:'period'}],
+    sum: v => `${perOf(v, 1)}에 책 ${v.n}권`,
+    ch(v, D){
+      const n = pos(v.n, 2), mo = moOf(v, 1), amt = Math.max(1, Math.round(n * D / (mo * 30)));
+      return { t:`${D}일 동안 책 ${amt}권 완독`, s:'매일 독서 기록 · 마지막 날 완독 인증', v:'photo',
+        math:`${n}권 ÷ ${perOf(v, 1)} → ${D}일치 = ${amt}권`, final:`🏁 책 ${amt}권 완독 인증` };
+    } },
+  exam: { e:'💯', n:'시험·점수', f:[{k:'subj',l:'과목',t:'text'},{k:'score',l:'목표 점수',u:'점'},{k:'min',l:'매일 공부',u:'분',full:true}],
+    sum: v => `${v.subj || '시험'} ${v.score}점`,
+    ch(v, D){
+      const m = pos(v.min, 60);
+      return { t:`${v.subj || '시험'} ${v.score}점 받기`, s:`매일 ${v.subj || ''} ${dur(m)} 공부 · 마지막 날 성적 인증`.replace('  ', ' '), v:'photo',
+        math:`${D}일 동안 총 ${dur(m * D)} 공부`, final:`🏁 ${v.subj || '시험'} ${v.score}점 성적 인증` };
+    } },
+  weekly: { e:'📅', n:'주 N회', f:[{k:'act',l:'무엇을',t:'text'},{k:'n',l:'일주일에',u:'회'}],
+    sum: v => `${v.act || '운동'} 주 ${v.n}회`,
+    ch(v, D){
+      const n = Math.min(7, pos(v.n, 3)), need = Math.min(D, Math.max(1, Math.ceil(D * n / 7)));
+      return { t:`${v.act || '운동'} 주 ${n}회`, s:'운동·활동 사진', v:'photo', math:`${D}일 중 ${need}번 하면 성공`, need };
+    } },
+  count: { e:'🔁', n:'매일 몇 번', f:[{k:'act',l:'무엇을',t:'text'},{k:'n',l:'하루',u:''},{k:'unit',l:'단위',t:'text'}],
+    sum: v => cTitle(v, pos(v.n, 10)),
+    ch(v, D){ const n = pos(v.n, 10), u = v.unit || '개'; return { t:cTitle(v, n), s:'인증 사진', v:'photo', math:`${D}일 동안 총 ${num(n * D)}${u}` }; } },
+  habit: { e:'✨', n:'나만의 습관', f:[{k:'title',l:'매일 해낼 것',t:'text',full:true}],
+    sum: v => v.title,
+    ch(v, D){ return { t:v.title || '나만의 습관', s:'내가 정한 습관', v:'photo', math:`${D}일 동안 매일` }; } },
+};
+
+/* =====================================================================
+   자유 입력 → 목표 정리 (규칙 기반 파서)
+   ===================================================================== */
+function parseGoal(raw){
+  const t = String(raw).replace(/\s+/g, ' ').trim();
+  if (!t) return null;
+  const n = re => { const m = t.match(re); return m ? parseFloat(m[1].replace(/,/g, '')) : null; };
+  const P = (pn, pu) => ({ pn, pu });
+  const months = () => {
+    let m;
+    if ((m = t.match(/(\d+(?:\.\d+)?)\s*(?:개월|달)/))) return P(+m[1], '개월');
+    if (/한\s*달/.test(t)) return P(1, '개월');
+    if (/두\s*달/.test(t)) return P(2, '개월');
+    if (/세\s*달/.test(t)) return P(3, '개월');
+    if ((m = t.match(/(\d+)\s*주(?:일)?\s*(?:동안|만에|안에|내|에|간)/))) return P(+m[1], '주');
+    if (/(일주일|한\s*주|매주|주당)/.test(t)) return P(1, '주');
+    if ((m = t.match(/(\d+)\s*일\s*(?:동안|만에|안에|내|에|간)/))) return P(+m[1], '일');
+    if (/(하루에|하루\s*동안|하루\s*만에|매일|하루)/.test(t)) return P(1, '일');
+    if ((m = t.match(/(\d+)\s*년/))) return P(Math.min(+m[1], 5) * 12, '개월');
+    if (/일\s*년|올해/.test(t)) return P(12, '개월');
+    return null;
+  };
+  const wonv = () => {
+    const m = t.match(/(\d[\d,]*(?:\.\d+)?)\s*(억|천만|백만|만|천)?\s*원/);
+    if (!m) { const k = t.match(/(십만|백만|천만|만|천)\s*원/); return k ? ({ '천만':1e7, '백만':1e6, '십만':1e5, '만':1e4, '천':1e3 })[k[1]] : null; }
+    return parseFloat(m[1].replace(/,/g, '')) * ({ '억':1e8, '천만':1e7, '백만':1e6, '만':1e4, '천':1e3 }[m[2]] || 1);
+  };
+  const clean = s => s
+    .replace(/(?:주|일주일에?|매주)\s*\d+\s*(?:회|번|일)/g, ' ')
+    .replace(/\d+(?:\.\d+)?\s*(?:시간|분|개|번|회|쪽|페이지|km|키로|킬로|잔|바퀴|세트|문제|장|점)/gi, ' ')
+    .replace(/매일|하루에?|날마다|아침|저녁|밤|씩|동안|하기|하자|할\s*것|해야지|목표|까지만|이하|줄이기|넘지\s*않기|안\s*넘기기|정도/g, ' ')
+    .replace(/(^|\s)(에|만|을|를|은|는|이|가)(?=\s|$)/g, ' ')
+    .replace(/\s+/g, ' ').trim();
+  const g = (kind, v) => ({ id:Math.random().toString(36).slice(2, 9), kind, raw:t, v });
+
+  // 1) 체중
+  if (/kg|킬로그램/i.test(t) || (/(킬로|키로)/.test(t) && /(빼|감량|살|다이어트|체중)/.test(t)) || /(감량|다이어트|살\s*빼|살을\s*빼|체중)/.test(t))
+    return g('weight', { total: n(/(\d+(?:\.\d+)?)\s*(?:kg|킬로|키로)/i) ?? 5, ...(months() || P(3, '개월')) });
+  // 2) 돈
+  const w = wonv();
+  if (w) return /(모으|모아|저축|저금|적금|목돈|벌)/.test(t)
+    ? g('save', { total:w, ...(months() || P(3, '개월')) })
+    : g('spend', { limit:w });
+  // 3) 점수
+  if (/\d+\s*점/.test(t)) {
+    const subj = (t.match(/(토익|토플|텝스|오픽|아이엘츠|수학|영어|국어|과학|사회|한국사|코딩|자격증|중간고사|기말고사|모의고사)/) || [])[1]
+      || clean(t.replace(/\d+\s*점.*/, '')) || '시험';
+    return g('exam', { subj, score: n(/(\d+)\s*점/), min:60 });
+  }
+  // 4) 책 N권
+  if (/\d+\s*권/.test(t)) return g('books', { n: n(/(\d+)\s*권/), ...(months() || P(1, '개월')) });
+  // 5) 단어
+  if (/단어/.test(t)) return g('words', { lang: (t.match(/(영어|일본어|중국어|스페인어|독일어|프랑스어|불어|한자)/) || [, '영어'])[1], n: n(/(\d+)\s*(?:개|단어)/) ?? 30 });
+  // 6) 주 N회
+  const wk = t.match(/(?:주|일주일에?|매주)\s*(\d+)\s*(?:회|번|일)/);
+  if (wk) return g('weekly', { act: clean(t) || '운동', n:+wk[1] });
+  // 7) 러닝
+  if (/(km|러닝|런닝|달리|뛰기|뛰자|조깅|마라톤)/i.test(t)) {
+    let km = n(/(\d+(?:\.\d+)?)\s*(?:km|키로|킬로)/i) ?? 3;
+    if (/(주\s*\d|일주일|매주)/.test(t)) km = r1(km / 5);
+    return g('run', { km });
+  }
+  // 8) 기상
+  if (/(일어나|기상)/.test(t)) {
+    let time = '07:00', m;
+    if ((m = t.match(/(\d{1,2}):(\d{2})/))) time = `${m[1].padStart(2,'0')}:${m[2]}`;
+    else if ((m = t.match(/(\d{1,2})\s*시(?:\s*(\d{1,2})\s*분|\s*(반))?/))) time = `${m[1].padStart(2,'0')}:${m[3] ? '30' : String(m[2] || 0).padStart(2,'0')}`;
+    return g('wake', { time });
+  }
+  // 9) 쪽수
+  if (/\d+\s*(?:쪽|페이지)/.test(t)) return g('pages', { p: n(/(\d+)\s*(?:쪽|페이지)/) });
+  // 10) 시간 (투자 or 줄이기)
+  const hrs = n(/(\d+(?:\.\d+)?)\s*시간/), mins = n(/(\d+)\s*분/);
+  if (hrs || mins) {
+    const total = Math.round((hrs || 0) * 60 + (mins || 0));
+    return /(까지만|이하|줄이|넘지|안\s*넘|만\s*하기|만$|만\s)/.test(t)
+      ? g('limit', { act: clean(t) || '폰', min: total })
+      : g('time', { act: clean(t) || '공부', min: total });
+  }
+  // 11) 매일 N개
+  const cm = t.match(/(\d+)\s*(개|번|회|잔|바퀴|세트|문제|장)/);
+  if (cm) return g('count', { act: clean(t) || '운동', n:+cm[1], unit:cm[2], tpl:(/매일|하루|날마다/.test(t) ? t : `매일 ${t}`).replace(cm[0], `{n}${cm[2]}`) });
+  // 12) 그 외: 그대로 습관
+  return g('habit', { title: t });
+}
+
+/* ---------- 상태 ---------- */
+const LS = 'haenae_v2', DAY = 864e5;
+const fresh = () => ({ user:null, points:0, plans:[], custom:[] });
+let S;
+try { S = JSON.parse(localStorage.getItem(LS)) || fresh(); } catch(e) { S = fresh(); }
+function save(){ try { localStorage.setItem(LS, JSON.stringify(S)); } catch(e) { toast('저장 공간이 가득 찼어요'); } }
+const uid = () => Math.random().toString(36).slice(2, 10);
+const sod = t => { const d = new Date(t); d.setHours(0,0,0,0); return d.getTime(); };
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const tierOf = price => TIERS.findIndex(t => price < t.max);
+const levelOf = (price, days) => LEVELS.findIndex(l => price / days < l.max);
+const allProducts = () => [...S.custom, ...PRODUCTS];
+const BASE = location.href.split('#')[0];
+const isKid = () => !!(S.user && S.user.kid);
+
+let view = { s: S.user ? 'shop' : 'land' }, draft = null, ob = null, cat = '전체', who = 'me', fileTarget = null;
+function go(s, p = {}){ view = { s, ...p }; render(); window.scrollTo(0, 0); }
+function toast(m){ const t = $('#toast'); t.textContent = m; t.classList.add('on'); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('on'), 2200); }
+
+/* ---------- 목표 → 이번 기간용 미션 ---------- */
+function missionOf(goal, days, safe){
+  const K = KINDS[goal.kind]; if (!K) return null;
+  const m = K.ch(goal.v || {}, days, !!safe);
+  if (isKid() && m.v !== 'self') m.v = 'guard';
+  return { ...m, id:goal.id, e:K.e, kn:K.n };
+}
+const needOf = (m, price, days) => m && m.need ? m.need : Math.ceil(days * LEVELS[levelOf(price, days)].thr);
+
+/* ---------- 진행 계산 ---------- */
+const curDay = p => Math.floor((sod(Date.now()) - p.start) / DAY) + p.offset;
+const dayDone = (p, w, d) => p.ch.every(c => p.log[w]?.[d]?.[c.id]);
+function succ(p, w){ let n = 0; for (let d = 0; d < p.days; d++) if (dayDone(p, w, d)) n++; return n; }
+function simPartner(p){
+  if (!p.partner) return;
+  const cur = Math.min(curDay(p), p.days);
+  p.log.pt = p.log.pt || {};
+  for (let d = 0; d < cur; d++) {
+    if (p.sim[d]) continue;
+    p.sim[d] = 1;
+    if (dayDone(p, 'pt', d)) continue;
+    if (Math.random() < .72) { p.log.pt[d] = p.log.pt[d] || {}; p.ch.forEach(c => p.log.pt[d][c.id] = { at:Date.now(), m:'sim' }); }
+  }
+}
+function settle(){
+  let changed = false;
+  S.plans.forEach(p => {
+    if (p.status !== 'active') return;
+    simPartner(p);
+    if (curDay(p) >= p.days) { finalize(p); changed = true; }
+  });
+  if (changed) save();
+}
+function finalize(p){
+  simPartner(p);
+  const me = succ(p, 'me'), need = p.need, fin = !p.final || !!p.log.me.final;
+  let ok;
+  if (p.mode === 'duel') { const o = succ(p, 'pt'); p.vs = [me, o]; ok = fin && (me > o || (me === o && me >= need)); }
+  else if (p.mode === 'team') { const o = succ(p, 'pt'); p.vs = [me, o]; ok = fin && me + o >= need * 2; }
+  else ok = fin && me >= need;
+  p.status = ok ? 'won' : 'lost';
+  p.result = { me, need, fin, at:Date.now() };
+  if (!ok) S.points += p.share;
+  if (ok && p.bonus) S.points += p.bonus;
+  p.seen = false;
+}
+
+/* ---------- 렌더 ---------- */
+const SCREENS = {};
+function render(){
+  settle();
+  const s = view.s;
+  $('#app').innerHTML = SCREENS[s]();
+  const tabbed = ['shop','plans','my'].includes(s);
+  $('#tabs').style.display = tabbed ? '' : 'none';
+  $('#frame').className = 'frame' + (tabbed ? '' : ' notab') + (s === 'result' ? ' dark' : '');
+  document.querySelectorAll('#tabs [data-t]').forEach(b => b.classList.toggle('on', b.dataset.t === s));
+  const n = S.plans.filter(p => p.status === 'active').length;
+  $('#tabN').hidden = !n; $('#tabN').textContent = n;
+  if (s === 'result' && view.win) confetti();
+}
+
+/* 랜딩 */
+SCREENS.land = () => `
+<div class="land fade">
+  <div class="top"><span class="brand">해내<i>샵</i></span></div>
+  <div class="hero">
+    <span class="lk">🔒</span>
+    <h1>결제는 지금,<br><em>배송은 해냈을 때.</em></h1>
+    <p>갖고 싶은 물건을 먼저 결제하세요.<br>나의 목표를 해내야 잠금이 풀립니다.</p>
+    <button class="btn acc" data-a="start">내 목표 적고 시작하기</button>
+  </div>
+  <div class="steps">
+    <div class="step"><span class="n">1</span><div><b>이루고 싶은 목표를 편하게 적기</b><span>"3달 동안 10kg 빼기"처럼 쓰면 알아서 정리돼요</span></div></div>
+    <div class="step"><span class="n">2</span><div><b>사고 싶은 물건과 받을 날 고르기</b><span>내일부터 3달까지, 목표가 기간에 맞게 나눠져요</span></div></div>
+    <div class="step"><span class="n">3</span><div><b>도전할 목표 하나 고르고 결제</b><span>결제하는 순간 물건이 잠겨요 🔒</span></div></div>
+    <div class="step"><span class="n">4</span><div><b>해내면 배송, 못 해내면 포인트</b><span>포인트로 다시 사도, 또 해내야 받아요</span></div></div>
+  </div>
+  <div class="story">
+    <p>"하고 싶은 건 많은데 끝까지 해내지 못하는 제가 답답했어요. 알람을 끄려면 사진을 찍어야 하는 앱처럼, 저에게도 강제성이 필요했습니다. 그래서 갖고 싶은 물건을 인질로 잡기로 했어요."</p>
+    <div class="by">— 임준형, 해내샵 첫 번째 고객이자 만든 사람</div>
+  </div>
+</div>`;
+
+/* 온보딩 */
+/* 기간 입력칸: 숫자 + 일/주/개월 */
+function periodField(gl){
+  const v = gl.v, pn = v.pn != null ? v.pn : (v.months != null ? v.months : 1), pu = v.pu || '개월';
+  return `<label><span>기간</span><div style="display:flex;gap:6px">
+    <input class="inp" style="flex:1;min-width:0" data-in="gField" data-id="${gl.id}" data-f="pn" type="number" inputmode="decimal" min="0" value="${esc(pn)}" />
+    <select class="inp" style="width:84px;padding:9px 8px" data-in="gField" data-id="${gl.id}" data-f="pu">${['일','주','개월'].map(u => `<option ${u === pu ? 'selected' : ''}>${u}</option>`).join('')}</select>
+  </div></label>`;
+}
+const EX = ['3달 동안 10kg 빼기','매일 영어 단어 50개','하루 2시간 공부','토익 900점 받기','6시에 일어나기','100만원 모으기','주 3회 크로스핏','인스타 하루 30분 이하','한 달에 책 2권','매일 5km 달리기'];
+const KID_EX = ['영어 단어 하루 10개','수학 100점 받기','하루 수학 1시간','게임 하루 1시간만','책 하루 10쪽','줄넘기 100개','방 정리 스스로 하기'];
+function obInit(step = 0, ret = null){
+  const u = S.user;
+  ob = { step, ret, kid: u ? !!u.kid : false, name: u ? u.name : '', text:'', goals: u ? JSON.parse(JSON.stringify(u.goals)) : [] };
+}
+SCREENS.ob = () => {
+  const st = ob.step, dots = `<div class="dots">${[0,1].map(i => `<i class="${i <= st ? 'on' : ''}"></i>`).join('')}</div>`;
+  const back = `<header class="bar"><button class="back" data-a="obBack">‹</button><h2></h2></header>`;
+  if (st === 0) return `${back}${dots}
+  <div class="ob fade">
+    <h1>누가 챌린지를 하나요?</h1>
+    <p class="s">아이를 위해 보호자가 목표를 정할 수도 있어요.</p>
+    <div class="who">
+      <button class="${!ob.kid ? 'on' : ''}" data-a="obKid" data-v="0"><div class="e">🙋</div><b>나</b><span>내 목표, 내 보상</span></button>
+      <button class="${ob.kid ? 'on' : ''}" data-a="obKid" data-v="1"><div class="e">👨‍👩‍👧</div><b>우리 아이</b><span>보호자가 목표를 정해요</span></button>
+    </div>
+    <label class="field"><span>${ob.kid ? '아이 이름' : '이름'}</span>
+      <input class="inp" data-in="obName" maxlength="10" value="${esc(ob.name)}" placeholder="${ob.kid ? '예) 하윤' : '예) 임준형'}" /></label>
+  </div>
+  <div class="sticky"><button class="btn" data-a="obNext" ${ob.name.trim() ? '' : 'disabled'} id="obNext">다음</button></div>`;
+
+  return `${back}${dots}
+  <div class="ob fade">
+    <h1>${ob.kid ? `${esc(ob.name)}에게 바라는 목표를` : '이루고 싶은 목표를'}<br>편하게 적어주세요</h1>
+    <p class="s">한 줄에 하나씩 적으면 종류·숫자·기간을 알아서 정리해 드려요. 숫자가 있으면 더 정확해요.</p>
+    <div class="ex">${(ob.kid ? KID_EX : EX).map(x => `<button data-a="obEx" data-x="${esc(x)}">+ ${esc(x)}</button>`).join('')}</div>
+    <textarea class="ta" id="obText" data-in="obText" placeholder="${ob.kid ? '예)\n영어 단어 하루 10개\n수학 100점 받기' : '예)\n3달 동안 10kg 빼기\n토익 900점 받기\n매일 아침 일기 쓰기'}">${esc(ob.text)}</textarea>
+    <div style="height:8px"></div>
+    <button class="btn line" data-a="obParse">✨ 정리하기</button>
+    ${ob.goals.length ? `<div class="sec">정리된 목표 <small>숫자는 눌러서 고칠 수 있어요</small></div>
+    ${ob.goals.map(gl => { const K = KINDS[gl.kind];
+      return `<div class="og">
+        <div class="tp"><span class="e">${K.e}</span><span class="tag lock">${K.n}</span><button class="x" data-a="obDel" data-id="${gl.id}" aria-label="삭제">×</button></div>
+        <b id="sum-${gl.id}">${esc(K.sum(gl.v))}</b><div class="raw">내가 쓴 말: “${esc(gl.raw)}”</div>
+        <div class="f">${K.f.map(f => f.t === 'period' ? periodField(gl) : `<label class="${f.full ? 'full' : ''}"><span>${f.l}</span><div class="u">
+          <input class="inp" data-in="gField" data-id="${gl.id}" data-f="${f.k}" type="${f.t || 'number'}" ${f.t ? '' : 'inputmode="decimal" min="0"'} value="${esc(gl.v[f.k] ?? '')}" />${f.u ? `<em>${f.u}</em>` : ''}</div></label>`).join('')}</div>
+      </div>`; }).join('')}` : ''}
+  </div>
+  <div class="sticky"><button class="btn acc" data-a="obDone" ${ob.goals.length || ob.text.trim() ? '' : 'disabled'} id="obDone">${ob.goals.length ? `이 목표들로 시작하기 (${ob.goals.length}개)` : '목표를 적고 정리해 주세요'}</button></div>`;
+};
+
+/* 쇼핑 */
+SCREENS.shop = () => {
+  const active = S.plans.filter(p => p.status === 'active');
+  let list = allProducts();
+  if (cat !== '전체') list = list.filter(p => p.cat === cat);
+  if (isKid() && cat === '전체') list = [...list].sort((a, b) => (b.cat === '키즈') - (a.cat === '키즈'));
+  return `
+  <header class="bar"><span class="brand">해내<i>샵</i></span><span class="pts">P ${S.points.toLocaleString()}</span></header>
+  <div class="banner"><h3>결제는 지금,<br><em>배송은 해냈을 때.</em></h3><p>${esc(S.user.name)}${isKid() ? '의' : ' 님의'} 목표 ${S.user.goals.length}개 중 하나를 해내면 배송돼요</p><span class="lk">🔒</span></div>
+  ${active.length ? `<button class="active" data-a="tab" data-t="plans"><b>🔥</b><span>진행 중인 챌린지 ${active.length}개 · 오늘 인증하러 가기</span>›</button>` : ''}
+  <div class="sec pad">무엇을 갖고 싶나요?</div>
+  <div class="chips">${CATS.map(c => `<button class="chip ${c === cat ? 'on' : ''}" data-a="cat" data-c="${c}">${c}</button>`).join('')}</div>
+  <div style="height:8px"></div>
+  <div class="grid fade">
+    <button class="prod add" data-a="addItem"><div class="img">＋</div><div class="tx"><b>사고 싶은 물건<br>직접 등록하기</b><small>이름과 가격만 적으면 돼요</small></div></button>
+    ${list.map(p => { const t = TIERS[tierOf(p.price)];
+      return `<button class="prod" data-a="pick" data-id="${p.id}"><div class="img" style="background:${p.bg}"><span class="tier tag lock">${t.name}</span>${p.e}</div>
+      <div class="tx"><b>${esc(p.n)}</b><div class="p won">${won(p.price)}</div><small>${t.name}</small></div></button>`; }).join('')}
+  </div>`;
+};
+
+/* 상품 설정 */
+function draftFor(item, opts = {}){
+  draft = { item, days:14, mode:'solo', partner:'', wager:'', pick:null, verify:{}, safe:{}, usePts:false, ...opts };
+  if (!draft.pick && S.user.goals.length === 1) draft.pick = S.user.goals[0].id;
+  if (!opts.days) { const gd = goalDays(S.user.goals.find(g => g.id === draft.pick)); if (gd) draft.days = gd; }
+}
+function draftMission(){
+  const d = draft, g = S.user.goals.find(x => x.id === d.pick);
+  if (!g) return null;
+  const m = missionOf(g, d.days, d.safe[g.id]);
+  m.v = d.verify[g.id] || m.v;
+  return m;
+}
+SCREENS.setup = () => {
+  const d = draft, it = d.item, t = TIERS[tierOf(it.price)];
+  const L = levelOf(it.price, d.days), m = draftMission(), need = needOf(m, it.price, d.days);
+  const share = d.mode === 'team' ? Math.ceil(it.price / 2) : it.price;
+  const usable = d.usePts ? Math.min(S.points, share) : 0;
+  const ready = m && (d.mode === 'solo' || d.partner.trim());
+  const gd = goalDays(S.user.goals.find(g => g.id === d.pick));
+  const cu = d.days % 30 === 0 ? ['개월', d.days / 30] : d.days % 7 === 0 ? ['주', d.days / 7] : ['일', d.days];
+  return `
+  <header class="bar"><button class="back" data-a="tab" data-t="shop">‹</button><h2>챌린지 설정</h2></header>
+  <div class="phead fade"><div class="img" style="background:${it.bg}">${it.e}</div><div><span class="tag lock">${t.name}</span><b style="margin-top:6px">${esc(it.n)}</b><div class="p won">${won(it.price)}</div></div></div>
+
+  <div class="pad">
+    <div class="sec">언제 받고 싶나요?</div>
+    ${gd ? `<button class="dur ${gd === d.days ? 'on' : ''}" data-a="dur" data-d="${gd}" style="width:100%;margin-bottom:8px;text-align:left;padding:12px 16px"><b>🎯 내 목표 기간 그대로 · ${dLabel(gd)}${dLabel(gd) === `${gd}일` ? '' : ` (${gd}일)`}</b><span>목표치가 바뀌지 않아요</span></button>` : ''}
+    <div class="durs" style="grid-template-columns:repeat(3,1fr)">${DURS.map(x => `<button class="dur ${x === d.days ? 'on' : ''}" data-a="dur" data-d="${x}"><b>${dLabel(x)}</b><span>${x}일</span></button>`).join('')}</div>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:10px">
+      <span style="font-size:14px;font-weight:700;color:var(--sub);white-space:nowrap">직접 입력</span>
+      <input class="inp" id="durN" type="number" inputmode="numeric" min="1" value="${cu[1]}" style="flex:1;min-width:0;padding:11px 12px" />
+      <select class="inp" id="durU" style="width:90px;padding:11px 8px">${['일','주','개월'].map(u => `<option ${u === cu[0] ? 'selected' : ''}>${u}</option>`).join('')}</select>
+      <button class="btn sm" data-a="durSet">적용</button>
+    </div>
+    <div class="effort">
+      <div class="eq">${won(it.price)} ÷ ${d.days}일</div>
+      <div class="big">하루 <em class="won">${won(it.price / d.days)}</em>어치의 노력</div>
+      <div class="meter">${LEVELS.map((_, i) => `<i class="${i <= L ? 'on' : ''}"></i>`).join('')}</div>
+      <div class="meter-l"><span>난이도</span><b>${LEVELS[L].name}</b></div>
+      <div class="rule">🎯 <span>${m && m.need ? `이 목표는 <b style="color:var(--ink)">${d.days}일 중 ${need}번</b> 해내면 배송돼요.`
+        : `<b style="color:var(--ink)">${d.days}일 중 ${need}일 이상</b> 해내면 배송돼요.`}${m && m.final ? ' 마지막 날 최종 인증도 필요해요.' : ''}${m && m.need ? '' : ' 기간을 길게 잡을수록 기준이 여유로워져요.'}</span></div>
+    </div>
+
+    ${isKid() ? '' : `
+    <div class="sec">누구와 함께하나요?</div>
+    <div class="modes">
+      <button class="mode ${d.mode === 'solo' ? 'on' : ''}" data-a="mode" data-m="solo"><div class="e">🎯</div><b>혼자</b><span>나와의 약속</span></button>
+      <button class="mode ${d.mode === 'duel' ? 'on' : ''}" data-a="mode" data-m="duel"><div class="e">⚔️</div><b>내기</b><span>더 많이 해낸 사람이 승리</span></button>
+      <button class="mode ${d.mode === 'team' ? 'on' : ''}" data-a="mode" data-m="team"><div class="e">🤝</div><b>팀</b><span>반반 결제, 같이 해내기</span></button>
+    </div>
+    ${d.mode !== 'solo' ? `<div class="partner">
+      <input class="inp" data-in="partner" maxlength="10" value="${esc(d.partner)}" placeholder="${d.mode === 'duel' ? '내기 상대 이름 (예: 재하형)' : '팀원 이름 (예: 재하형)'}" />
+      ${d.mode === 'duel' ? `<input class="inp" data-in="wager" maxlength="24" value="${esc(d.wager)}" placeholder="진 사람 벌칙 (예: 치킨 쏘기)" />`
+        : `<div class="desc" style="margin:2px 2px 0">💡 가격을 반씩 나눠 결제하고, 같은 목표로 둘이 합쳐 ${need * 2}일 이상 해내면 배송돼요.</div>`}
+    </div>` : ''}`}
+
+    <div class="sec">어떤 목표로 도전할까요? <small>1개 선택</small></div>
+    <div class="desc">내가 적은 목표를 ${d.days}일에 맞게 나눴어요.</div>
+    <div class="cands">${S.user.goals.map(g => { const c = missionOf(g, d.days, d.safe[g.id]); if (!c) return ''; const on = d.pick === g.id;
+      return `<div class="cand ${on ? 'on' : ''}" data-a="cand" data-id="${g.id}" role="button" tabindex="0">
+        <span class="rd"></span>
+        <div class="c"><b>${c.e} ${esc(c.t)}</b><span>${esc(c.s)}</span><div class="math">🧮 ${esc(c.math)}</div>
+        ${c.warn ? (d.safe[g.id]
+          ? `<div class="wchip safe">🛡️ 권장 기준으로 낮췄어요 <button data-a="safe" data-id="${g.id}">원래 목표로 되돌리기</button></div>`
+          : `<div class="wchip">⚠️ ${esc(c.warn.m)} <button data-a="safe" data-id="${g.id}">${esc(c.warn.b)}</button></div>`) : ''}
+        </div></div>`; }).join('')}</div>
+    <div style="height:8px"></div>
+    <button class="btn line sm" data-a="editGoals" style="width:100%">＋ 다른 목표 적기</button>
+
+    ${m ? `<div class="sec">어떻게 인증할까요?</div>
+    <div class="desc">승인 요청은 ${isKid() ? '보호자' : '친구'}에게 링크를 보내 확인받는 방식이에요.</div>
+    <div class="vrow"><b>${m.e} ${esc(m.t)}</b><div class="vopts">${Object.entries(VERIFY).map(([k, x]) =>
+      `<button class="vopt ${m.v === k ? 'on' : ''}" data-a="verify" data-id="${m.id}" data-v="${k}"><i>${x.e}</i>${k === 'guard' && isKid() ? '보호자 승인' : x.n}${bonusOK(k) ? '<br><small style="color:var(--lock)">+1,000P</small>' : ''}</button>`).join('')}</div>
+      <div class="wchip ${bonusOK(m.v) ? 'safe' : ''}" style="${bonusOK(m.v) ? 'color:var(--lock);background:var(--lock2)' : 'color:var(--sub);background:var(--bg)'}">${bonusOK(m.v) ? `🎁 사진·앱 기록으로 성공하면 보너스 ${BONUS.toLocaleString()}P를 더 받아요` : '셀프 체크·승인 요청은 성공 보너스가 없어요. 사진·앱 기록 인증은 +1,000P!'}</div></div>` : ''}
+  </div>
+  <div style="height:20px"></div>
+  <div class="sticky">
+    ${S.points > 0 ? `<label class="usept"><input type="checkbox" data-a="usePts" ${d.usePts ? 'checked' : ''} /> 포인트 사용 (보유 P ${S.points.toLocaleString()})</label>` : ''}
+    <div class="paybar"><div class="t"><small>${d.mode === 'team' ? '내 몫 (반반 결제)' : '지금 결제'}${usable ? ` · 포인트 -${usable.toLocaleString()}` : ''}</small><b class="won">${won(share - usable)}</b></div>
+      <button class="btn acc" data-a="toPay" ${ready ? '' : 'disabled'}>${!m ? '목표를 골라주세요' : (d.mode !== 'solo' && !d.partner.trim()) ? '상대 이름 입력' : '결제하고 잠그기 🔒'}</button></div>
+  </div>`;
+};
+
+/* 결제 */
+SCREENS.pay = () => {
+  const d = draft, it = d.item, m = draftMission(), need = needOf(m, it.price, d.days);
+  const share = d.mode === 'team' ? Math.ceil(it.price / 2) : it.price;
+  const usable = d.usePts ? Math.min(S.points, share) : 0;
+  return `
+  <header class="bar"><button class="back" data-a="backSetup">‹</button><h2>주문 확인</h2></header>
+  <div class="pay fade">
+    <div class="receipt">
+      <div class="r"><span>상품</span><b>${it.e} ${esc(it.n)}</b></div>
+      <div class="r"><span>도전 목표</span><b>${m.e} ${esc(m.t)}<br><small style="color:var(--sub);font-weight:600">${VERIFY[m.v].e} ${m.v === 'guard' && isKid() ? '보호자 승인' : VERIFY[m.v].n}</small></b></div>
+      <div class="r"><span>받는 조건</span><b>${d.days}일 중 ${need}${m.need ? '번' : '일'} 성공${d.mode === 'team' ? ' (팀 합산)' : ''}${m.final ? '<br>+ 마지막 날 최종 인증' : ''}</b></div>
+      <div class="r"><span>방식</span><b>${d.mode === 'solo' ? '🎯 혼자' : d.mode === 'duel' ? `⚔️ ${esc(d.partner)}와 내기` : `🤝 ${esc(d.partner)}와 팀`}</b></div>
+      ${d.mode === 'duel' && d.wager ? `<div class="r"><span>진 사람 벌칙</span><b>${esc(d.wager)}</b></div>` : ''}
+      <hr>
+      <div class="r"><span>상품 금액${d.mode === 'team' ? ' (반반)' : ''}</span><b class="won">${won(share)}</b></div>
+      ${usable ? `<div class="r"><span>포인트 사용</span><b class="won" style="color:var(--lock)">-${usable.toLocaleString()}P</b></div>` : ''}
+      <div class="r tot"><span>결제 금액</span><b class="won">${won(share - usable)}</b></div>
+    </div>
+    <div class="policy">🔒 <b>결제 즉시 상품이 잠겨요.</b> 기간 안에 조건을 채우면 잠금이 풀리고 배송이 시작돼요.<br>
+    💜 <b>못 해내도 돈은 사라지지 않아요.</b> 결제 금액 ${won(share)}이 해내샵 포인트로 100% 전환돼요. 단, 포인트로 다시 사도 챌린지는 또 해내야 해요.</div>
+    ${bonusOK(m.v) ? `<label class="usept" style="margin-top:14px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;line-height:1.5"><input type="checkbox" data-a="consent" ${d.consent ? 'checked' : ''} style="margin-top:2px" /><span><b>(선택) 인증 데이터 활용 동의 → 성공 보너스 +${BONUS.toLocaleString()}P</b><br><span style="color:var(--sub);font-weight:500;font-size:12px">인증 사진과 기록을 개인을 알 수 없게 처리해, 목표별 성공률 통계와 추천 개선에 활용해요. 동의하지 않아도 챌린지는 똑같이 할 수 있어요.</span></span></label>` : ''}
+    <div style="height:16px"></div>
+    <button class="btn acc" data-a="pay">${won(share - usable)} 결제하기</button>
+    <div class="demo-note">발표용 데모라 실제 결제는 이뤄지지 않아요</div>
+  </div>`;
+};
+
+/* 내 챌린지 목록 */
+SCREENS.plans = () => {
+  const act = S.plans.filter(p => p.status === 'active'), done = S.plans.filter(p => p.status !== 'active');
+  const card = p => {
+    const s = succ(p, 'me'), pr = p.status === 'active' ? Math.min(100, s / p.need * 100) : 100;
+    const c = p.status === 'won' ? 'var(--ok)' : p.status === 'lost' ? '#c9c6bd' : 'var(--lock)';
+    const cd = Math.min(curDay(p), p.days - 1);
+    return `<button class="pcard" data-a="open" data-id="${p.id}"><div class="ring" style="--p:${pr};--c:${c}"><div>${p.item.e}<i>${p.status === 'won' ? '🔓' : p.status === 'lost' ? '💜' : '🔒'}</i></div></div>
+      <div class="tx"><b>${esc(p.item.n)}</b><span>${esc(p.ch[0].t)}</span><br><span>${p.status === 'active' ? `Day ${cd + 1}/${p.days} · ${s}/${p.need} 성공${dayDone(p, 'me', cd) ? ' · 오늘 완료 ✅' : ' · 오늘 인증 남음'}` : p.status === 'won' ? '잠금 해제 · 배송 준비 중' : `포인트 ${p.share.toLocaleString()}P로 전환`}</span>
+      ${p.mode !== 'solo' ? `<div style="margin-top:4px"><span class="tag ${p.mode === 'duel' ? 'acc' : 'ok'}">${p.mode === 'duel' ? '⚔️ vs' : '🤝 with'} ${esc(p.partner)}</span></div>` : ''}</div>›</button>`;
+  };
+  return `
+  <header class="bar"><h2>내 챌린지</h2><span class="pts">P ${S.points.toLocaleString()}</span></header>
+  ${S.plans.length ? `
+  ${act.length ? `<div class="sec pad">진행 중 <small>${act.length}개</small></div><div class="plist fade">${act.map(card).join('')}</div>` : ''}
+  ${done.length ? `<div class="sec pad">지난 챌린지</div><div class="plist">${done.slice().reverse().map(card).join('')}</div>` : ''}`
+  : `<div class="empty"><div class="e">🔒</div>아직 잠긴 물건이 없어요.<br>갖고 싶은 물건부터 골라볼까요?<div style="height:16px"></div><button class="btn sm" data-a="tab" data-t="shop">쇼핑하러 가기</button></div>`}`;
+};
+
+/* 챌린지 보드 */
+function missionRow(p, w, c, cd, isFinal){
+  const l = isFinal ? p.log.me.final : p.log[w]?.[cd]?.[c.id];
+  const v = w === 'pt' ? 'self' : c.v;
+  const lastDay = cd === p.days - 1;
+  if (isFinal && !l && !lastDay) return `<div class="mi final locked"><span class="dn" style="background:#d9d6cd">🏁</span><div class="c"><b>${esc(p.final)}</b><span>마지막 날(Day ${p.days})에 열려요</span></div></div>`;
+  const title = isFinal ? p.final : c.t, sub = isFinal ? '마지막 날 최종 인증' : c.s;
+  return `<div class="mi ${l ? 'done' : ''} ${isFinal ? 'final' : ''}">
+    ${l ? (l.photo ? `<img class="ph" src="${l.photo}" alt="인증 사진">` : `<span class="dn">✓</span>`) : ''}
+    <div class="c"><b>${esc(title)}</b><span>${l ? `${w === 'me' ? '나' : esc(p.partner)} · ${new Date(l.at).toLocaleTimeString('ko-KR', { hour:'numeric', minute:'2-digit' })} ${l.m === 'guard' ? '승인 완료' : '인증 완료'}`
+      : `${VERIFY[v].e} ${w === 'pt' ? `${esc(p.partner)} 대신 체크 (같은 기기 데모)` : (v === 'guard' && isKid() ? '보호자 승인' : VERIFY[v].n) + ' · ' + esc(sub)}`}</span></div>
+    ${l ? '' : `<button class="btn sm ${v === 'guard' ? 'lock' : ''}" data-a="check" data-id="${isFinal ? 'final' : c.id}">${v === 'self' ? '체크' : v === 'guard' ? '요청' : '인증'}</button>`}
+  </div>`;
+}
+SCREENS.board = () => {
+  const p = S.plans.find(x => x.id === view.id);
+  if (!p) return SCREENS.plans();
+  const cd = Math.min(curDay(p), p.days - 1), w = p.partner ? who : 'me';
+  const me = succ(p, 'me'), pr = Math.min(100, me / p.need * 100);
+  const doable = me + (p.days - cd) >= p.need;
+  const ptS = p.partner ? succ(p, 'pt') : 0;
+  const unit = p.weekly ? '번' : '일';
+  return `
+  <header class="bar"><button class="back" data-a="tab" data-t="plans">‹</button><h2></h2>${p.status !== 'active' ? `<span class="tag ${p.status === 'won' ? 'ok' : 'lock'}">${p.status === 'won' ? '잠금 해제' : '포인트 전환'}</span>` : `<span class="tag lock">🔒 잠김</span>`}</header>
+  <div class="bhead fade">
+    <div class="ring" style="--p:${pr};--c:${p.status === 'won' ? 'var(--ok)' : 'var(--lock)'}"><div>${p.item.e}<i>${p.status === 'won' ? '🔓' : '🔒'}</i></div></div>
+    <h1>${esc(p.item.n)}</h1>
+    <div class="meta">${p.ch[0].e} ${esc(p.ch[0].t)}</div>
+    <div class="meta">${p.status === 'active' ? `Day ${cd + 1} / ${p.days} · ${p.days - cd - 1 > 0 ? `${p.days - cd - 1}일 남음` : '마지막 날'}` : '종료된 챌린지'}</div>
+  </div>
+  <div class="pad">
+    <div class="kpis">
+      <div class="kpi"><span>해낸 ${p.weekly ? '횟수' : '날'}</span><b>${me}${unit}</b></div>
+      <div class="kpi"><span>필요</span><b>${p.need}${unit}</b></div>
+      <div class="kpi"><span>달성률</span><b>${Math.round(pr)}%</b></div>
+    </div>
+    ${p.status === 'active' && p.mode === 'solo' && !doable ? `<div class="alert bad">⚠️ 남은 날을 모두 해내도 ${p.need}${unit}에 못 미쳐요. 그래도 결제 금액은 포인트로 돌려받아요.</div>` : ''}
+    ${p.status === 'active' && me >= p.need && p.mode === 'solo' ? `<div class="alert ok">🎉 기준 달성!${p.final && !p.log.me.final ? ' 마지막 날 최종 인증만 남았어요.' : ' 기간이 끝나면 바로 잠금이 풀려요.'}</div>` : ''}
+
+    ${p.partner ? `<div class="versus">
+      <h4>${p.mode === 'duel' ? '⚔️ 내기 현황' : '🤝 팀 현황'}<span>${p.mode === 'duel' ? '더 많이 해낸 사람이 승리' : `합산 ${p.need * 2}${unit} 필요`}</span></h4>
+      ${p.mode === 'team' ? `<div class="vsrow"><span>팀 합산</span><div class="bar"><i style="width:${Math.min(100, (me + ptS) / (p.need * 2) * 100)}%;background:var(--ok)"></i></div><em>${me + ptS}</em></div>` : ''}
+      <div class="vsrow"><span>나</span><div class="bar"><i style="width:${me / p.days * 100}%;background:var(--acc)"></i></div><em>${me}${unit}</em></div>
+      <div class="vsrow"><span>${esc(p.partner)}</span><div class="bar"><i style="width:${ptS / p.days * 100}%;background:var(--lock)"></i></div><em>${ptS}${unit}</em></div>
+      ${p.wager ? `<div class="wager">🎲 진 사람 벌칙: <b style="color:var(--ink)">${esc(p.wager)}</b></div>` : ''}
+    </div>` : ''}
+
+    ${p.status === 'active' ? `
+    <div class="sec">오늘의 인증 <small>${new Date(sod(Date.now()) + p.offset * DAY).toLocaleDateString('ko-KR', { month:'long', day:'numeric', weekday:'short' })}</small></div>
+    ${p.partner ? `<div class="seg"><button class="${w === 'me' ? 'on' : ''}" data-a="who" data-w="me">나</button><button class="${w === 'pt' ? 'on' : ''}" data-a="who" data-w="pt">${esc(p.partner)}</button></div><div style="height:8px"></div>` : ''}
+    <div class="miss">${p.ch.map(c => missionRow(p, w, c, cd, false)).join('')}${p.final && w === 'me' ? missionRow(p, w, p.ch[0], cd, true) : ''}</div>` : `
+    <div style="height:14px"></div><button class="btn ${p.status === 'won' ? 'acc' : 'lock'}" data-a="showResult" data-id="${p.id}">${p.status === 'won' ? '🎁 잠금 해제 화면 다시 보기' : '💜 결과 다시 보기'}</button>`}
+
+    <div class="sec">${w === 'me' ? '나의' : esc(p.partner) + '의'} 기록 <small>${p.days}일</small></div>
+    <div class="cal">${Array.from({ length:p.days }, (_, d) => {
+      const cls = d === cd && p.status === 'active' ? 'today' : d > cd && p.status === 'active' ? '' : dayDone(p, w, d) ? 'ok' : 'miss';
+      return `<i class="${cls}">${d + 1}</i>`; }).join('')}</div>
+    <div class="legend"><span><i style="background:var(--ok)"></i>해냄</span><span><i style="background:var(--bad2)"></i>못 함</span></div>
+
+    ${p.status === 'active' ? `<div class="demo"><b>⏩ 발표용 데모 도구 (시간 빨리감기)</b><div class="row">
+      <button class="btn line" data-a="skip">다음 날로</button>
+      <button class="btn line" data-a="demoWin">남은 기간 성공</button>
+      <button class="btn line" data-a="demoLose">여기서 종료</button></div></div>` : ''}
+    <div style="height:30px"></div>
+  </div>`;
+};
+
+/* 결과 */
+SCREENS.result = () => {
+  const p = S.plans.find(x => x.id === view.id), win = p.status === 'won', r = p.result, unit = p.weekly ? '번' : '일';
+  const vs = p.vs ? (p.mode === 'duel'
+    ? `<br>⚔️ <b>나 ${p.vs[0]}${unit} : ${esc(p.partner)} ${p.vs[1]}${unit}</b>${p.wager ? ` → ${win ? `${esc(p.partner)}의 벌칙: ` : '나의 벌칙: '}<b>${esc(p.wager)}</b>` : ''}`
+    : `<br>🤝 팀 합산 <b>${p.vs[0] + p.vs[1]}${unit}</b> / 필요 ${p.need * 2}${unit}`) : '';
+  return win ? `
+  <div class="res win">
+    <div class="stage"><div class="glow"></div><div class="lkk">🔒</div><div class="it">${p.item.e}</div></div>
+    <div class="lab"><span class="tag ok">🔓 잠금 해제</span><h1>해냈다!</h1>
+    <p>${esc(p.item.n)}의 잠금이 풀렸어요.<br>주문이 접수되어 배송을 준비하고 있어요.</p>
+    <div class="box">🎯 <b>${esc(p.ch[0].t)}</b><br>📅 ${p.days}일 중 <b>${r.me}${unit}</b> 해냄 (기준 ${r.need}${unit})${p.final ? '<br>🏁 최종 인증 완료' : ''}${vs}${p.bonus ? `<br>🎁 인증 보너스 <b>+${p.bonus.toLocaleString()}P</b> 적립` : ''}</div>
+    <div class="acts"><button class="btn acc" data-a="tab" data-t="shop">다음 목표에 도전하기</button><button class="btn line" data-a="open" data-id="${p.id}">기록 보기</button></div></div>
+  </div>` : `
+  <div class="res lose">
+    <div class="stage"><div class="it"><span class="coin">💜</span></div></div>
+    <span class="tag lock">포인트 전환</span><h1>이번엔 아쉬워요</h1>
+    <p>${esc(p.ch[0].t)}<br>${p.days}일 중 ${r.me}${unit} 해냄 (기준 ${r.need}${unit})${p.final && !r.fin ? ' · 최종 인증 미완료' : ''}${p.vs && p.mode === 'duel' ? `<br>⚔️ 나 ${p.vs[0]}${unit} : ${esc(p.partner)} ${p.vs[1]}${unit}` : ''}</p>
+    <div class="box">💜 결제한 <b>${won(p.share)}</b>은 사라지지 않았어요. 해내샵 포인트 <b>${p.share.toLocaleString()}P</b>로 전환됐어요.<br>단, 포인트로 다시 사도 <b>챌린지는 또 해내야 받을 수 있어요.</b>${p.mode === 'duel' && p.wager ? `<br>🎲 벌칙: <b>${esc(p.wager)}</b>` : ''}</div>
+    <div class="acts"><button class="btn acc" data-a="retry" data-id="${p.id}">포인트로 다시 도전하기</button><button class="btn line" data-a="tab" data-t="shop">다른 물건 보기</button></div>
+  </div>`;
+};
+
+/* 마이 */
+SCREENS.my = () => {
+  const u = S.user;
+  const won_ = S.plans.filter(p => p.status === 'won').length, lost = S.plans.filter(p => p.status === 'lost').length;
+  return `
+  <header class="bar"><h2>마이</h2></header>
+  <div class="prof fade"><div class="av">${esc(u.name.slice(0, 1))}</div><div><b>${esc(u.name)}</b><span>${u.kid ? '👨‍👩‍👧 아이 모드 · 보호자 관리' : '🙋 나를 위한 챌린지'} · 해낸 물건 ${won_}개</span></div></div>
+  <div class="wallet"><span>해내샵 포인트</span><b>${S.points.toLocaleString()} P</b><p>못 해낸 챌린지의 결제 금액이 100% 포인트로 돌아와요. 포인트로 살 때도 챌린지는 해내야 해요.</p></div>
+  <div class="pad">
+    <div class="sec">나의 목표 <button class="btn sm line" data-a="editGoals">수정·추가</button></div>
+    <div class="glist">${u.goals.map(g => { const K = KINDS[g.kind]; if (!K) return '';
+      return `<div class="gl"><span class="e">${K.e}</span><div style="flex:1"><b>${esc(K.sum(g.v))}</b><div style="font-size:12px;color:var(--dim)">“${esc(g.raw)}”</div></div></div>`; }).join('')}</div>
+    <div class="sec">기록</div>
+    <div class="gl" style="margin-bottom:8px"><span class="e">📊</span><div style="flex:1"><b>데이터 기여</b><div style="font-size:12px;color:var(--sub)">익명 통계에 쓰인 인증 ${S.plans.filter(p => p.bonus).reduce((n, p) => n + Object.keys(p.log.me).length, 0)}건 · 받은 보너스 ${(S.plans.filter(p => p.bonus && p.status === 'won').length * BONUS).toLocaleString()}P</div></div></div>
+    <div class="kpis" style="margin-top:0"><div class="kpi"><span>도전</span><b>${S.plans.length}</b></div><div class="kpi"><span>해냄</span><b style="color:var(--ok)">${won_}</b></div><div class="kpi"><span>포인트 전환</span><b style="color:var(--lock)">${lost}</b></div></div>
+    <button class="danger" data-a="reset" id="resetBtn">데이터 초기화</button>
+  </div>`;
+};
+
+/* 승인 페이지 */
+SCREENS.approve = () => {
+  const q = view.q;
+  if (!q) return `<div class="ap"><div class="card"><div class="e">🤔</div><h1>잘못된 승인 링크예요</h1></div></div>`;
+  return `<div class="ap fade"><div class="card">
+    <div class="e">${view.ok ? '✅' : '🤝'}</div>
+    <h1>${view.ok ? '승인했어요!' : `${esc(q.n)}${q.kid ? '의' : ' 님의'} 인증 요청`}</h1>
+    <div class="q"><small>${esc(q.i)} 챌린지 · ${q.id === 'final' ? '최종 인증' : `Day ${q.d + 1}`}</small>${esc(q.c)}</div>
+    ${view.ok ? `<p style="color:var(--sub);font-size:14px">아래 승인 코드를 ${esc(q.n)}${q.kid ? '에게' : ' 님에게'} 알려주세요.</p><div class="code">${view.code}</div>`
+      : `<p style="color:var(--sub);font-size:14px;margin-bottom:18px">정말 해냈는지 확인하셨나요?</p>
+      <button class="btn acc" data-a="approve">확인했어요, 승인하기</button><div style="height:8px"></div>
+      <button class="btn line" data-a="reject">아직이에요</button>`}
+  </div><div class="demo-note">해내샵 · 결제는 지금, 배송은 해냈을 때</div></div>`;
+};
+
+/* ---------- 승인 코드 ---------- */
+function hash(s){ let x = 5381; for (const ch of s) x = ((x << 5) + x + ch.charCodeAt(0)) >>> 0; return x; }
+const codeFor = (key, cid, d) => String(hash(`${key}|${cid}|${d}`) % 9000 + 1000);
+const enc = o => btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+const dec = s => { try { return JSON.parse(decodeURIComponent(escape(atob(s.replace(/-/g, '+').replace(/_/g, '/'))))); } catch(e) { return null; } };
+
+/* ---------- 시트 ---------- */
+function sheet(html){ $('#sheetPn').innerHTML = `<div class="grab"></div>${html}`; $('#sheet').classList.add('on'); }
+function closeSheet(){ $('#sheet').classList.remove('on'); }
+function guardSheet(p, cid){
+  const cd = Math.min(curDay(p), p.days - 1), title = cid === 'final' ? p.final : p.ch[0].t;
+  const link = `${BASE}#approve=${enc({ n:S.user.name, kid:isKid(), i:p.item.n, c:title, d:cd, k:p.key, id:cid })}`;
+  view.link = link;
+  sheet(`<h3>🤝 ${isKid() ? '보호자' : '친구'}에게 승인 받기</h3>
+    <p>링크를 보내면 상대가 확인 후 <b>4자리 승인 코드</b>를 알려줘요. 코드를 입력하면 인증 완료!</p>
+    <div class="linkbox">${esc(link)}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <button class="btn line" data-a="shareLink">링크 보내기</button>
+      <button class="btn line" data-a="openLink">승인 화면 열기</button>
+    </div>
+    <div class="coderow"><input class="inp" id="codeIn" inputmode="numeric" maxlength="4" placeholder="0000" /><button class="btn sm lock" data-a="code" data-p="${p.id}" data-c="${cid}">확인</button></div>`);
+}
+
+/* ---------- 사진 ---------- */
+function shrink(file){
+  return new Promise((res, rej) => {
+    const img = new Image(), url = URL.createObjectURL(file);
+    img.onload = () => {
+      const s = Math.min(1, 260 / Math.max(img.width, img.height)), cv = document.createElement('canvas');
+      cv.width = Math.round(img.width * s); cv.height = Math.round(img.height * s);
+      cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+      URL.revokeObjectURL(url); res(cv.toDataURL('image/jpeg', .62));
+    };
+    img.onerror = rej; img.src = url;
+  });
+}
+$('#file').addEventListener('change', async e => {
+  const f = e.target.files[0]; e.target.value = '';
+  if (!f || !fileTarget) return;
+  try {
+    const photo = await shrink(f), p = S.plans.find(x => x.id === fileTarget.pid);
+    mark(p, 'me', fileTarget.cid, { photo, m:fileTarget.m });
+    toast('📸 인증 완료!');
+  } catch(err) { toast('사진을 불러오지 못했어요'); }
+  fileTarget = null;
+});
+function mark(p, w, cid, extra = {}){
+  const cd = Math.min(curDay(p), p.days - 1);
+  p.log[w] = p.log[w] || {};
+  if (cid === 'final') p.log[w].final = { at:Date.now(), ...extra };
+  else { p.log[w][cd] = p.log[w][cd] || {}; p.log[w][cd][cid] = { at:Date.now(), ...extra }; }
+  save(); keepScroll();
+  if (w === 'me' && cid !== 'final' && dayDone(p, 'me', cd)) setTimeout(() => toast('🔥 오늘 인증 완료! 잠금 해제에 한 걸음 더'), 300);
+}
+
+/* ---------- 컨페티 ---------- */
+function confetti(){
+  const box = document.createElement('div'); box.className = 'confetti';
+  const cs = ['#ff5b22','#5b47e0','#14a155','#ffc53d','#ff8fb1','#3ba0ff'];
+  for (let i = 0; i < 70; i++) {
+    const s = document.createElement('i');
+    s.style.left = Math.random() * 100 + '%'; s.style.background = cs[i % cs.length];
+    s.style.animationDuration = 1.8 + Math.random() * 1.8 + 's'; s.style.animationDelay = 1.2 + Math.random() * .6 + 's';
+    box.appendChild(s);
+  }
+  document.body.appendChild(box); setTimeout(() => box.remove(), 5000);
+}
+
+/* ---------- 액션 ---------- */
+function obParseText(){
+  const lines = String(ob.text).split(/\n|,|·/).map(s => s.trim()).filter(Boolean);
+  const added = [];
+  lines.forEach(l => { if (!ob.goals.some(g => g.raw === l.replace(/\s+/g, ' '))) { const g = parseGoal(l); if (g) { ob.goals.push(g); added.push(g); } } });
+  ob.text = '';
+  return added.length;
+}
+const A = {
+  start(){ obInit(); go('ob'); },
+  tab(el){ go(el.dataset.t); },
+  obBack(){ if (ob.step && !ob.ret) { ob.step--; render(); } else go(ob.ret || (S.user ? 'my' : 'land')); },
+  obKid(el){ const k = el.dataset.v === '1'; if (k !== ob.kid) { ob.kid = k; ob.goals = []; } render(); },
+  obNext(){ if (!ob.name.trim()) return; ob.step = 1; render(); window.scrollTo(0, 0); },
+  obEx(el){ const x = el.dataset.x; ob.text = (ob.text.trim() ? ob.text.trim() + '\n' : '') + x; render(); const ta = $('#obText'); ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length); },
+  obParse(){ const n = obParseText(); keepScroll(); toast(n ? `✨ 목표 ${n}개를 정리했어요` : '새로 정리할 목표가 없어요'); },
+  obDel(el){ ob.goals = ob.goals.filter(g => g.id !== el.dataset.id); keepScroll(); },
+  obDone(){
+    if (ob.text.trim()) obParseText();
+    if (!ob.goals.length) return toast('목표를 1개 이상 적어주세요');
+    S.user = { name:ob.name.trim(), kid:ob.kid, goals:ob.goals };
+    save(); cat = '전체';
+    if (ob.ret === 'setup' && draft) { const newest = ob.goals[ob.goals.length - 1]; if (!S.user.goals.some(g => g.id === draft.pick)) draft.pick = newest.id; go('setup'); }
+    else { go('shop'); toast('목표 저장 완료! 갖고 싶은 물건을 골라보세요'); }
+  },
+  cat(el){ cat = el.dataset.c; render(); },
+  pick(el){ draftFor(allProducts().find(p => p.id === el.dataset.id)); go('setup'); },
+  dur(el){ draft.days = +el.dataset.d; keepScroll(); },
+  durSet(){
+    const n = parseFloat($('#durN').value), u = $('#durU').value;
+    if (!(n > 0)) return toast('기간을 숫자로 적어주세요');
+    const days = Math.round(n * (u === '주' ? 7 : u === '개월' ? 30 : 1));
+    if (days < 1 || days > MAX_DAYS) return toast(`1일부터 ${MAX_DAYS}일까지 정할 수 있어요`);
+    draft.days = days; keepScroll(); toast(`📅 ${days}일로 정했어요`);
+  },
+  mode(el){ draft.mode = el.dataset.m; keepScroll(); },
+  cand(el){
+    draft.pick = el.dataset.id;
+    const gd = goalDays(S.user.goals.find(g => g.id === draft.pick));
+    if (gd && gd !== draft.days) { draft.days = gd; toast(`🎯 목표 기간(${dLabel(gd)})에 맞췄어요. 바꾸면 비율대로 나눠요`); }
+    keepScroll();
+  },
+  safe(el){ const id = el.dataset.id; draft.safe[id] = !draft.safe[id]; keepScroll(); },
+  verify(el){ draft.verify[el.dataset.id] = el.dataset.v; keepScroll(); },
+  usePts(el){ draft.usePts = el.checked; keepScroll(); },
+  consent(el){ draft.consent = el.checked; if (el.checked) toast(`🎁 성공하면 ${BONUS.toLocaleString()}P를 더 드려요`); },
+  toPay(){ go('pay'); },
+  backSetup(){ go('setup'); },
+  pay(){
+    const d = draft, it = d.item, m = draftMission(), need = needOf(m, it.price, d.days);
+    const share = d.mode === 'team' ? Math.ceil(it.price / 2) : it.price, usable = d.usePts ? Math.min(S.points, share) : 0;
+    const p = { id:uid(), key:uid() + uid(), item:{ id:it.id, n:it.n, e:it.e, price:it.price, bg:it.bg }, days:d.days, start:sod(Date.now()), offset:0,
+      mode:isKid() ? 'solo' : d.mode, partner:d.mode === 'solo' || isKid() ? '' : d.partner.trim(), wager:d.mode === 'duel' ? d.wager.trim() : '',
+      need, weekly:!!m.need, final:m.final || null, bonus: bonusOK(m.v) && d.consent ? BONUS : 0, share, ptsUsed:usable, goalId:d.pick, safe:!!d.safe[d.pick],
+      ch:[{ id:m.id, t:m.t, s:m.s, v:m.v, e:m.e }], log:{ me:{}, pt:{} }, sim:{}, status:'active', created:Date.now() };
+    S.points -= usable; S.plans.push(p); save();
+    const ov = document.createElement('div'); ov.className = 'paying';
+    ov.innerHTML = `<div><div class="lk">🔒</div><b>결제 완료! 잠겼어요</b><span>${esc(it.n)}는 해낸 다음에 만나요</span></div>`;
+    document.body.appendChild(ov);
+    setTimeout(() => { ov.remove(); who = 'me'; go('board', { id:p.id }); }, 1700);
+  },
+  open(el){ const p = S.plans.find(x => x.id === el.dataset.id); who = 'me';
+    if (p && p.status !== 'active' && !p.seen) { p.seen = true; save(); go('result', { id:p.id, win:p.status === 'won' }); }
+    else go('board', { id:el.dataset.id }); },
+  showResult(el){ const p = S.plans.find(x => x.id === el.dataset.id); go('result', { id:p.id, win:p.status === 'won' }); },
+  who(el){ who = el.dataset.w; keepScroll(); },
+  check(el){
+    const p = S.plans.find(x => x.id === view.id), cid = el.dataset.id, c = p.ch[0];
+    if (who === 'pt' && p.partner && cid !== 'final') return mark(p, 'pt', cid, { m:'self' });
+    if (c.v === 'self') { mark(p, 'me', cid, { m:'self' }); toast('✅ 체크 완료'); }
+    else if (c.v === 'guard') guardSheet(p, cid);
+    else { fileTarget = { pid:p.id, cid, m:c.v }; $('#file').click(); }
+  },
+  shareLink(){ const l = view.link, t = `${S.user.name}의 해내샵 챌린지 인증을 확인해 주세요 👉 ${l}`;
+    (navigator.share ? navigator.share({ title:'해내샵 인증 요청', text:t }) : navigator.clipboard.writeText(t).then(() => toast('링크를 복사했어요'))).catch(() => {}); },
+  openLink(){ window.open(view.link, '_blank'); },
+  code(el){
+    const p = S.plans.find(x => x.id === el.dataset.p), cid = el.dataset.c, cd = Math.min(curDay(p), p.days - 1);
+    if (($('#codeIn').value || '').trim() === codeFor(p.key, cid, cd)) { closeSheet(); mark(p, 'me', cid, { m:'guard' }); toast('🤝 승인 완료!'); }
+    else { toast('코드가 맞지 않아요'); $('#codeIn').select(); }
+  },
+  approve(){ view.ok = true; view.code = codeFor(view.q.k, view.q.id, view.q.d); render(); },
+  reject(){ toast('알겠어요. 다시 요청이 오면 확인해 주세요'); },
+  skip(){
+    const p = S.plans.find(x => x.id === view.id); p.offset++; simPartner(p);
+    if (curDay(p) >= p.days) { finalize(p); p.seen = true; save(); return go('result', { id:p.id, win:p.status === 'won' }); }
+    save(); keepScroll(); toast(`📅 Day ${curDay(p) + 1}로 넘어갔어요`);
+  },
+  demoWin(){
+    const p = S.plans.find(x => x.id === view.id), cd = curDay(p);
+    for (let d = cd; d < p.days; d++) { p.log.me[d] = p.log.me[d] || {}; p.ch.forEach(c => p.log.me[d][c.id] = p.log.me[d][c.id] || { at:Date.now(), m:'demo' }); }
+    if (p.final) p.log.me.final = p.log.me.final || { at:Date.now(), m:'demo' };
+    p.offset += p.days - cd; finalize(p); p.seen = true; save(); go('result', { id:p.id, win:p.status === 'won' });
+  },
+  demoLose(){
+    const p = S.plans.find(x => x.id === view.id); p.offset += p.days - curDay(p); finalize(p); p.seen = true; save();
+    go('result', { id:p.id, win:p.status === 'won' });
+  },
+  retry(el){
+    const p = S.plans.find(x => x.id === el.dataset.id), it = allProducts().find(x => x.id === p.item.id) || p.item;
+    const pick = S.user.goals.some(g => g.id === p.goalId) ? p.goalId : null;
+    draftFor(it, { usePts:true, days:p.days, mode:p.mode, partner:p.partner, wager:p.wager, pick,
+      verify: pick ? { [pick]:p.ch[0].v } : {}, safe: pick ? { [pick]:p.safe } : {} });
+    go('setup'); toast('💜 포인트가 자동으로 적용됐어요');
+  },
+  addItem(){
+    const es = ['🎁','👗','🎸','📷','🧴','🏕️','🛹','🪴','🎟️','💍','🖥️','🧳'];
+    sheet(`<h3>사고 싶은 물건 등록</h3><p>쇼핑몰에 없는 물건도 등록해서 챌린지를 걸 수 있어요.</p>
+      <div class="emojis" id="emo">${es.map((e, i) => `<button data-a="emo" class="${i ? '' : 'on'}" data-e="${e}">${e}</button>`).join('')}</div>
+      <label class="field"><span>물건 이름</span><input class="inp" id="niName" maxlength="20" placeholder="예) 캠핑 의자" /></label>
+      <label class="field"><span>가격</span><input class="inp" id="niPrice" inputmode="numeric" placeholder="예) 89000" /></label>
+      <button class="btn acc" data-a="saveItem">등록하고 챌린지 걸기</button>`);
+  },
+  emo(el){ document.querySelectorAll('#emo button').forEach(b => b.classList.toggle('on', b === el)); },
+  saveItem(){
+    const n = $('#niName').value.trim(), price = parseInt(($('#niPrice').value || '').replace(/[^\d]/g, ''), 10);
+    if (!n) return toast('물건 이름을 적어주세요');
+    if (!price || price < 1000) return toast('가격을 1,000원 이상으로 적어주세요');
+    const it = { id:'c' + uid(), e:$('#emo .on')?.dataset.e || '🎁', n, price, cat:'전체', bg:'#f1efe9' };
+    S.custom.unshift(it); save(); closeSheet(); draftFor(it); go('setup');
+  },
+  closeSheet,
+  editGoals(){ obInit(1, view.s === 'setup' ? 'setup' : 'my'); go('ob'); },
+  reset(el){
+    if (!el.dataset.sure) { el.dataset.sure = 1; el.textContent = '한 번 더 누르면 모든 기록이 지워져요'; return; }
+    S = fresh(); save(); cat = '전체'; go('land');
+  },
+};
+function keepScroll(){ const y = window.scrollY; render(); window.scrollTo(0, y); }
+
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-a]'); if (!el) return;
+  const f = A[el.dataset.a]; if (!f) return;
+  if (el.tagName !== 'INPUT') e.preventDefault();
+  e.stopPropagation();
+  f(el, e);
+});
+document.addEventListener('input', e => {
+  const el = e.target, k = el.dataset.in; if (!k) return;
+  if (k === 'obName') { ob.name = el.value; const b = $('#obNext'); if (b) b.disabled = !el.value.trim(); }
+  if (k === 'obText') { ob.text = el.value; const b = $('#obDone'); if (b) b.disabled = !(ob.goals.length || el.value.trim()); }
+  if (k === 'gField') {
+    const g = ob.goals.find(x => x.id === el.dataset.id); if (!g) return;
+    g.v[el.dataset.f] = el.type === 'number' ? (el.value === '' ? '' : +el.value) : el.value;
+    if (el.dataset.f === 'pn' || el.dataset.f === 'pu') { delete g.v.months; if (g.v.pu == null) g.v.pu = '개월'; if (g.v.pn == null) g.v.pn = 1; }
+    const sm = document.getElementById('sum-' + g.id); if (sm) sm.textContent = KINDS[g.kind].sum(g.v);
+  }
+  if (k === 'partner' || k === 'wager') {
+    draft[k] = el.value;
+    if (k === 'partner') { const b = document.querySelector('[data-a=toPay]'); const ok = draft.pick && el.value.trim();
+      if (b) { b.disabled = !ok; b.textContent = !draft.pick ? '목표를 골라주세요' : el.value.trim() ? '결제하고 잠그기 🔒' : '상대 이름 입력'; } }
+  }
+});
+document.addEventListener('change', e => { if (e.target.tagName === 'SELECT' && e.target.dataset.in === 'gField') e.target.dispatchEvent(new Event('input', { bubbles:true })); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.target.dataset.in === 'obName') { e.preventDefault(); A.obNext(); }
+  if (e.key === 'Enter' && e.target.id === 'durN') { e.preventDefault(); A.durSet(); }
+  if (e.key === 'Enter' && e.target.id === 'codeIn') { e.preventDefault(); document.querySelector('[data-a=code]')?.click(); }
+  if (e.key === 'Enter' && (e.metaKey || e.ctrlKey) && e.target.id === 'obText') { e.preventDefault(); A.obParse(); }
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('cand')) { e.preventDefault(); A.cand(e.target); }
+});
+
+/* ---------- 시작 ---------- */
+function route(){
+  const m = location.hash.match(/^#approve=(.+)$/);
+  if (m) { view = { s:'approve', q:dec(m[1]) }; render(); return true; }
+  return false;
+}
+window.addEventListener('hashchange', () => { if (!route()) go(S.user ? 'shop' : 'land'); });
+if (!route()) render();
+</script>
+</body>
+</html>
