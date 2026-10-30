@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>해내샵</title>
 <meta name="description" content="결제는 지금, 배송은 해냈을 때. 나의 목표 챌린지를 해내야 받을 수 있는 쇼핑몰." />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/neodgm/neodgm-webfont@1.601/neodgm/style.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri@2.40.3/dist/galmuri.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" />
 <style>
 :root{
   --bg:#f6f5f1; --card:#fff; --ink:#16161d; --sub:#6e6e78; --dim:#a3a3ad; --line:#ebe9e3;
@@ -368,6 +371,277 @@ header.bar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:
 .fade{animation:fadeup .35s ease}
 @keyframes fadeup{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-delay:0s!important;transition:none!important}.res .stage .it,.res .lab{opacity:1;transform:none}}
+
+/* =====================================================================
+   Y2K PIXEL THEME — 픽셀 폰트 · 각진 박스 · 딱딱한 그림자 · 점박이 배경
+   ===================================================================== */
+:root{
+  --bg:#f3efe4; --card:#fffdf7; --ink:#1d1611; --sub:#5b5148; --dim:#8f8479; --line:#1d1611;
+  --acc:#ff6a1a; --acc2:#ffe3cc; --ok:#2f8f37; --ok2:#dcf2d4; --lock:#2f5fd0; --lock2:#dde7ff;
+  --bad:#c8331b; --bad2:#ffe0d8; --warn:#8a4b00; --warn2:#fff0c9; --r:0px;
+  --px:'Galmuri11','Galmuri9',monospace; --en:'Silkscreen','Galmuri11',monospace;
+  --sh:5px 5px 0 var(--ink);
+}
+body{font-family:var(--px);background:#d9d2c1;letter-spacing:0}
+.frame{background-color:var(--bg);
+  background-image:radial-gradient(rgba(29,22,17,.5) .9px,transparent 1.4px),radial-gradient(rgba(29,22,17,.3) .8px,transparent 1.3px);
+  background-size:17px 13px,11px 19px;background-position:0 0,7px 6px;
+  box-shadow:none;border-left:3px solid var(--ink);border-right:3px solid var(--ink)}
+.en{font-family:var(--en);letter-spacing:.5px}
+button,input,textarea,select{font-family:var(--px)}
+.blink{animation:pxblink 1s steps(1) infinite}
+@keyframes pxblink{50%{opacity:0}}
+
+/* 박스 공통: 각지고, 검은 테두리, 딱딱한 그림자 */
+.card,.step,.goal,.og,.prod,.effort,.mode,.dur,.cand,.vrow,.receipt,.pcard,.kpi,.versus,.mi,.gl,.paybar,.who button,.policy,.alert,.empty .btn{border-radius:0!important}
+.step,.goal,.og,.prod,.effort,.mode,.dur,.cand,.vrow,.receipt,.pcard,.kpi,.versus,.mi,.gl,.who button,.card{background:var(--card);border:3px solid var(--ink)!important;box-shadow:var(--sh)}
+.dur,.mode,.kpi,.mi,.gl{box-shadow:3px 3px 0 var(--ink)}
+.paybar{border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.cand.on{background:#fff4e6;box-shadow:5px 5px 0 var(--acc)}
+.cand.off{opacity:.5}
+.cand .rd{border-radius:0;border:3px solid var(--ink)}
+.cand.on .rd{border-color:var(--ink)}
+.cand.on .rd::after{border-radius:0;inset:3px;background:var(--acc)}
+.goal.on,.mode.on,.who button.on{background:var(--acc2)}
+.goal .h .ck{border-radius:0;border:3px solid var(--ink)}
+.goal.on .h .ck{background:var(--ink)}
+.dur.on{background:var(--ink);color:#fff8e7}
+.dur b{font-weight:700}
+.prod{transition:transform .08s}
+.prod:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+.prod .img{border-bottom:3px solid var(--ink)}
+.prod .tx b{font-weight:400}
+.prod .tx .p{font-weight:700}
+.prod.add .img{background:repeating-linear-gradient(45deg,#efe9da 0 6px,#f8f4ea 6px 12px)}
+
+/* 버튼 */
+.btn{border-radius:0;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);font-weight:700;transition:transform .06s,box-shadow .06s}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.btn.acc{background:var(--acc);color:var(--ink)}
+.btn.line{background:var(--card);color:var(--ink);border:3px solid var(--ink)}
+.btn.lock{background:var(--lock);color:#fff}
+.btn:disabled{opacity:.4}
+.vopt{border-radius:0;border:2px solid var(--ink);background:var(--card)}
+.vopt.on{background:var(--ink);color:#fff8e7}
+.vopt.on small{color:#9fc0ff!important}
+.chip{border-radius:0;border:2px solid var(--ink);color:var(--ink);background:var(--card)}
+.chip.on{background:var(--ink);color:#fff8e7}
+.ex button{border-radius:0;border:2px dashed var(--ink);color:var(--ink);background:var(--card)}
+.ex button:hover{background:var(--acc2)}
+.back{border-radius:0;font-family:var(--en);font-size:22px}
+.back:hover{background:var(--acc2)}
+
+/* 입력 */
+.inp,.ta{border-radius:0;border:3px solid var(--ink);background:var(--card)}
+.inp:focus,.ta:focus{border-color:var(--ink);box-shadow:3px 3px 0 var(--acc)}
+.og .f .inp{border-width:2px}
+
+/* 태그·뱃지 */
+.tag{border-radius:0;border:2px solid currentColor;font-weight:700}
+.pts{border-radius:0;border:2px solid var(--ink);background:var(--lock2);color:var(--lock)}
+.wchip,.adj,.alert,.policy,.linkbox,.rules{border-radius:0}
+.wchip{border:2px dashed currentColor}
+.alert{border:2px solid currentColor}
+.policy{border:3px solid var(--ink);box-shadow:var(--sh)}
+.usept{font-weight:700}
+
+/* 헤더·탭바 */
+header.bar{background:rgba(243,239,228,.95);border-bottom:3px solid var(--ink)}
+.bar h2{font-weight:700}
+.brand{font-weight:700;font-size:22px;letter-spacing:0}
+.brand i{color:var(--acc);text-shadow:2px 2px 0 var(--ink)}
+#tabs{border-top:3px solid var(--ink);background:var(--card)}
+#tabs button{font-weight:700}
+#tabs .badge i{border-radius:0;border:2px solid var(--ink)}
+.dots i{border-radius:0;height:6px;background:#d6cfbd}
+.dots i.on{background:var(--ink)}
+.sec{font-weight:700}
+
+/* 쇼핑 배너: 계단식 노을 */
+.banner{border-radius:0;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);color:#3a1306;
+  background:linear-gradient(180deg,#ffd57a 0 20%,#ffc15c 20% 40%,#ffab45 40% 60%,#ff9233 60% 80%,#ff7f2a 80%)}
+.banner .en{font-size:12px;color:#7a2a0e;margin-bottom:4px}
+.banner h3{font-weight:700}
+.banner h3 em{color:#fff7da;text-shadow:2px 2px 0 #3a1306}
+.banner p{opacity:1;color:#5a1d0b}
+.active{border-radius:0;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);background:var(--lock2);color:var(--lock)}
+
+/* 진행 링 → 네모 */
+.ring,.ring > div{border-radius:0}
+.ring{border:3px solid var(--ink)}
+.meter i,.vsrow .bar,.vsrow .bar i,.hist .b{border-radius:0}
+.meter i{height:12px;border:2px solid var(--ink);background:var(--card)}
+.meter i.on{background:var(--acc)}
+.vsrow .bar{border:2px solid var(--ink);height:16px;background:var(--card)}
+.cal i{border-radius:0;border:2px solid var(--ink);background:var(--card)}
+.cal i.ok{background:var(--ok);color:#fff}
+.cal i.miss{background:var(--bad2)}
+.cal i.today{outline:3px solid var(--acc);outline-offset:0}
+.legend i{border-radius:0;border:1px solid var(--ink)}
+.mi .ph,.mi .dn{border-radius:0;border:2px solid var(--ink)}
+.mi.done{background:var(--ok2)}
+.seg{border-radius:0;border:3px solid var(--ink);background:var(--card);padding:0}
+.seg button{border-radius:0}
+.seg button.on{background:var(--ink);color:#fff8e7;box-shadow:none}
+.demo{border-radius:0;border:3px dashed var(--ink)}
+.story{border-radius:0;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--acc)}
+.story .by{opacity:.75}
+.step .n{border-radius:0;font-family:var(--en)}
+.wallet{border-radius:0;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);
+  background:linear-gradient(180deg,#5d8ff0 0 50%,#4a7de0 50%)}
+.prof .av{border-radius:0;border:3px solid var(--ink);box-shadow:3px 3px 0 var(--acc)}
+.danger{font-family:var(--px)}
+
+/* 시트·토스트·결제 */
+#sheet .pn{border-radius:0;border:3px solid var(--ink);border-bottom:none}
+#sheet .grab{border-radius:0}
+.emojis button{border-radius:0;border:2px solid var(--ink)}
+#toast{border-radius:0;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--acc);background:var(--card);color:var(--ink);font-weight:700}
+.paying{background:rgba(29,22,17,.92)}
+.paying b{font-family:var(--en);font-size:30px}
+.confetti i{width:8px!important;height:8px!important;border-radius:0}
+
+/* 시작 화면 */
+.land{padding:18px 18px 40px}
+.land .top{display:flex;align-items:center;gap:10px}
+.scene{position:relative;height:360px;border:3px solid var(--ink);box-shadow:7px 7px 0 var(--ink);overflow:hidden;margin:16px 0 24px;background:#ff9233}
+.scene svg,.bgscene svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.scene-tx{position:absolute;left:0;right:0;top:30px;text-align:center;color:#3a1306}
+.scene-tx .en{font-size:34px;line-height:1.1}
+.scene-tx h1{font-size:58px;font-weight:700;line-height:1.1;margin:8px 0 6px;color:#3a1306;text-shadow:3px 3px 0 #fff1c2}
+.scene-tx p{font-size:15px;font-weight:700}
+.scene-ft{position:absolute;left:0;right:0;bottom:10px;text-align:center;font-size:10px;color:#ffd7a0;font-family:var(--en)}
+.start{font-size:18px;padding:16px}
+.howto{font-family:var(--en);font-size:15px;margin:30px 0 12px}
+
+/* 이름 입력 다이얼로그 */
+.eyebrow{font-family:var(--en);font-size:13px;color:var(--sub);margin:8px 0 10px}
+.who .e{font-size:30px}
+.dialog{background:var(--card);border:3px solid var(--ink);box-shadow:9px 9px 0 var(--ink);padding:28px 22px 24px;text-align:center;margin-top:8px}
+.dlg-t{font-family:var(--en);font-size:26px;line-height:1.2}
+.dlg-s{font-size:13px;color:var(--sub);margin-top:6px}
+.name-in{border:none!important;border-bottom:4px dotted var(--ink)!important;box-shadow:none!important;background:transparent!important;text-align:center;font-size:24px!important;margin:18px 0 24px;padding:8px 4px!important}
+.dlg-b{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dlg-b .btn{font-family:var(--en);font-size:18px}
+
+/* 결과: STAGE CLEAR / GAME OVER */
+.res2{position:relative;overflow:hidden;padding:48px 20px 40px;justify-content:flex-start}
+.res2 > *:not(.bgscene){position:relative}
+.bgscene{position:absolute;inset:0}
+.paused{width:100%;max-width:340px;background:#2f5fd0;color:#fff;padding:20px 18px;margin-bottom:10px;
+  box-shadow:inset 0 0 0 4px #2f5fd0,inset 0 0 0 7px #fff,0 0 0 3px #fff,0 0 0 6px #2f5fd0,8px 8px 0 6px rgba(29,22,17,.35)}
+.paused .en{font-size:30px;line-height:1.1}
+.paused div + div{font-size:14px;margin-top:8px;font-weight:700}
+.paused.over{background:#1d1611;box-shadow:inset 0 0 0 4px #1d1611,inset 0 0 0 7px #fff,0 0 0 3px #fff,0 0 0 6px #1d1611,8px 8px 0 6px rgba(0,0,0,.4)}
+.res2 .stage{width:150px;height:150px;margin:10px 0 8px}
+.res2 .stage .glow{background:radial-gradient(circle,rgba(255,255,255,.75),transparent 65%)}
+.res2 .lab{display:flex;flex-direction:column;align-items:center;width:100%}
+.res2 p.sub{color:#fff;font-weight:700;text-shadow:2px 2px 0 rgba(0,0,0,.35);font-size:14px}
+.res2 .box{background:var(--card);color:var(--ink);border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);border-radius:0;max-width:360px}
+.res2 .box b{color:var(--ink)}
+.res2 .acts .btn.line{background:var(--card);color:var(--ink);border-color:var(--ink)}
+.coin{font-size:80px}
+
+/* 남은 둥근 모서리 정리 */
+.btn.sm,.demo .row .btn,.paybar .btn{border-radius:0}
+.phead .img{border-radius:0;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.dlg-t{font-size:22px}
+
+/* 승인 페이지 */
+.ap .card{box-shadow:8px 8px 0 var(--ink)}
+.ap .q{border-radius:0;border:2px dashed var(--ink);background:var(--bg)}
+.code{font-family:var(--en)}
+
+/* =====================================================================
+   KITSCH Y2K v2 — 핫핑크 · 라임 · 일렉트릭 블루 · 크림 / 둥근모 + Pixelify
+   ===================================================================== */
+:root{
+  --bg:#fff3df; --card:#fffaf0; --ink:#1a0f2e; --sub:#4b3d63; --dim:#8a7fa3; --line:#1a0f2e;
+  --acc:#ff4fa3; --acc2:#ffd6ea; --lime:#c8ff3d; --yel:#ffe14a; --org:#ff7a1a;
+  --ok:#14a35a; --ok2:#d9ffd1; --lock:#3b5bff; --lock2:#dfe5ff; --bad:#e0263c; --bad2:#ffe0e4; --warn:#7a4a00; --warn2:#fff2b8;
+  --px:'NeoDunggeunmo','Galmuri11',monospace; --en:'Pixelify Sans','NeoDunggeunmo',monospace;
+  --sh:5px 5px 0 var(--ink);
+}
+body{font-family:var(--px);background:#2a1a45}
+.frame{background-color:var(--bg);
+  background-image:radial-gradient(rgba(26,15,46,.42) 1px,transparent 1.5px),radial-gradient(rgba(255,79,163,.35) 1px,transparent 1.5px);
+  background-size:18px 14px,13px 21px;background-position:0 0,6px 9px}
+.en{font-family:var(--en);font-weight:700;letter-spacing:.5px}
+.btn{font-family:var(--px);font-weight:400;font-size:17px}
+.btn.acc{background:var(--acc);color:var(--ink)}
+.btn.acc:hover{background:#ff6bb4}
+.btn.lock{background:var(--lock);color:#fff}
+.btn.line{background:var(--card)}
+.dur.on,.vopt.on,.chip.on,.seg button.on{background:var(--ink);color:var(--lime)}
+.vopt.on small{color:var(--acc)!important}
+.goal.on,.mode.on,.who button.on{background:var(--lime)}
+.cand.on{background:#fff0f7;box-shadow:5px 5px 0 var(--acc)}
+.cand.on .rd::after{background:var(--acc)}
+.meter i.on{background:var(--acc)}
+.inp:focus,.ta:focus{box-shadow:3px 3px 0 var(--acc)}
+.brand{font-size:24px}
+.brand i{color:var(--acc);text-shadow:2px 2px 0 var(--ink)}
+.pts{background:var(--lime);color:var(--ink)}
+header.bar{background:rgba(255,243,223,.96)}
+#tabs{background:var(--card)}
+#tabs button.on{color:var(--ink)}
+#tabs .badge i{background:var(--acc);color:var(--ink)}
+.dots i.on{background:var(--acc)}
+.story{box-shadow:6px 6px 0 var(--acc);background:var(--ink)}
+.story .by{color:var(--lime);opacity:1}
+.step .n{background:var(--acc);color:var(--ink);border:2px solid var(--ink)}
+.step:nth-child(2) .n{background:var(--lime)} .step:nth-child(3) .n{background:var(--yel)} .step:nth-child(4) .n{background:#8fb0ff}
+.howto{font-size:20px}
+.wallet{background:linear-gradient(180deg,#7b4dff 0 50%,#6a3df0 50%);box-shadow:6px 6px 0 var(--acc)}
+.tag.lock{background:var(--lock2)}
+#toast{box-shadow:4px 4px 0 var(--acc)}
+.sec{font-size:17px}
+.ob h1{font-weight:400}
+
+/* 쇼핑 배너 */
+.banner{background:var(--ink);color:var(--card);box-shadow:6px 6px 0 var(--acc)}
+.banner .en{color:var(--lime);font-size:14px}
+.banner h3{color:var(--card);font-weight:400;font-size:24px}
+.banner h3 em{color:var(--acc);text-shadow:none}
+.banner p{color:#d9cfee}
+.banner .lk{opacity:1}
+
+/* 상품 카드: 진짜 사진 + 스티커 */
+.prod .img{position:relative;background:#f4ead6;overflow:hidden;font-size:52px}
+.pimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(1.12) contrast(1.04)}
+.prod .img .tier{z-index:2;background:var(--lime);color:var(--ink);border:2px solid var(--ink);font-size:11px;transform:rotate(-4deg)}
+.prod .tx b{font-size:14px}
+.prod .tx .p{font-family:var(--en);font-size:19px;color:var(--ink)}
+.prod .tx .p::before{content:"";display:inline-block;width:8px;height:8px;background:var(--acc);border:2px solid var(--ink);margin-right:6px;vertical-align:2px}
+.prod:hover .pimg{filter:saturate(1.3) contrast(1.08)}
+.phead .img,.ring > div{position:relative;overflow:hidden;background:#f4ead6}
+.ring > div i{z-index:2}
+.res2 .stage .it{overflow:hidden}
+.res2 .stage .it .pimg{border:4px solid var(--ink);box-shadow:6px 6px 0 var(--acc)}
+.paying .lk .pimg{position:static;width:120px;height:120px;border:4px solid var(--card)}
+
+/* 시작 화면 */
+.scene{height:390px;box-shadow:7px 7px 0 var(--acc);background:#ff4fa3}
+.scene-tx{top:26px;color:var(--card)}
+.scene-tx .en{font-size:40px;color:var(--yel);text-shadow:3px 3px 0 var(--ink)}
+.scene-tx h1{font-family:var(--px);font-weight:400;font-size:72px;color:var(--card);
+  text-shadow:4px 0 0 var(--ink),-4px 0 0 var(--ink),0 4px 0 var(--ink),0 -4px 0 var(--ink),7px 7px 0 var(--acc)}
+.scene-tx .pill{display:inline-block;margin-top:14px;background:var(--ink);color:var(--lime);padding:8px 12px;font-size:15px;border:2px solid var(--card)}
+.scene-ft{color:var(--card);text-shadow:1px 1px 0 var(--ink)}
+.start{font-family:var(--en);font-size:22px;background:var(--lime)!important}
+.land .sub2{text-align:center;font-size:14px;color:var(--ink);margin-top:14px;background:var(--card);border:2px solid var(--ink);padding:10px}
+
+/* 이름 입력 */
+.dlg-t{font-family:var(--en);font-size:28px}
+.dialog{box-shadow:9px 9px 0 var(--acc)}
+.name-in::placeholder{color:#b8aecb}
+.dlg-b .btn{font-family:var(--en);font-size:20px}
+
+/* 로드 / 새 게임 */
+.loadbox{display:grid;gap:10px;margin-top:4px}
+.loadbox .btn{flex-direction:column;align-items:flex-start;text-align:left;gap:4px}
+.loadbox small{display:block;font-size:12px;opacity:.75}
+.credit{font-size:11px;color:var(--dim);text-align:center;margin:18px 0 0}
 </style>
 </head>
 <body>
@@ -389,20 +663,18 @@ header.bar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:
 
 /* ---------- 상품 ---------- */
 const PRODUCTS = [
-  { id:'p1',  e:'🍰', n:'카페 디저트 세트',            price:12000,   cat:'먹거리', bg:'#fdeee6' },
-  { id:'p2',  e:'🍗', n:'바삭 치킨 한 마리',           price:23000,   cat:'먹거리', bg:'#fdf1dc' },
-  { id:'p3',  e:'📚', n:'읽고 싶던 책 3권 세트',       price:48000,   cat:'취미',   bg:'#e9f0fb' },
-  { id:'p4',  e:'🧸', n:'블록 장난감 대형 세트',       price:59000,   cat:'키즈',   bg:'#fde8ec' },
-  { id:'p5',  e:'👟', n:'쿠션 러닝화',                 price:139000,  cat:'패션',   bg:'#e8f6ee' },
-  { id:'p6',  e:'🧥', n:'경량 겨울 패딩',              price:199000,  cat:'패션',   bg:'#eceaf8' },
-  { id:'p7',  e:'🎧', n:'노이즈캔슬링 무선 이어폰',    price:289000,  cat:'전자기기', bg:'#eef0f3' },
-  { id:'p8',  e:'⌚', n:'스마트워치',                  price:329000,  cat:'전자기기', bg:'#e6f3f6' },
-  { id:'p9',  e:'🎮', n:'휴대용 게임기',               price:398000,  cat:'취미',   bg:'#fbe9e9' },
-  { id:'p10', e:'🏋️', n:'크로스핏 3개월 등록권',       price:450000,  cat:'취미',   bg:'#f3eee6' },
-  { id:'p11', e:'✈️', n:'주말 여행 항공권',            price:650000,  cat:'취미',   bg:'#e7f0fd' },
-  { id:'p12', e:'💻', n:'태블릿 PC',                   price:799000,  cat:'전자기기', bg:'#efefef' },
-  { id:'p13', e:'👜', n:'명품 가방',                   price:2400000, cat:'패션',   bg:'#f6efe4' },
+  { id:'p1', e:'🍰', n:'카페 조각 케이크 세트',      price:12000,   cat:'먹거리',  img:'https://images.unsplash.com/photo-1536599524557-5f784dd53282?auto=format&fit=crop&w=640&q=70' },
+  { id:'p2', e:'🍗', n:'바삭 치킨 한 마리',          price:23000,   cat:'먹거리',  img:'https://images.unsplash.com/photo-1426869981800-95ebf51ce900?auto=format&fit=crop&w=640&q=70' },
+  { id:'p3', e:'📚', n:'읽고 싶던 책 꾸러미',        price:48000,   cat:'취미',    img:'https://images.unsplash.com/photo-1548969400-9d3786842937?auto=format&fit=crop&w=640&q=70' },
+  { id:'p4', e:'🧸', n:'블록 장난감 대형 세트',      price:59000,   cat:'키즈',    img:'https://images.unsplash.com/photo-1586339949531-a77bdcc85fef?auto=format&fit=crop&w=640&q=70' },
+  { id:'p5', e:'👟', n:'쿠션 러닝화',                price:139000,  cat:'패션',    img:'https://images.unsplash.com/photo-1600185652960-c9d8869d015c?auto=format&fit=crop&w=640&q=70' },
+  { id:'p7', e:'🎧', n:'노이즈캔슬링 무선 헤드폰',   price:289000,  cat:'전자기기', img:'https://images.unsplash.com/photo-1553774661-0651f14b2da4?auto=format&fit=crop&w=640&q=70' },
+  { id:'p8', e:'⌚', n:'스마트워치',                 price:329000,  cat:'전자기기', img:'https://images.unsplash.com/photo-1557045136-50ed3874553c?auto=format&fit=crop&w=640&q=70' },
+  { id:'p9', e:'🎮', n:'휴대용 게임기',              price:398000,  cat:'취미',    img:'https://images.unsplash.com/photo-1550921464-1bbe1d247da5?auto=format&fit=crop&w=640&q=70' },
+  { id:'p13', e:'👜', n:'명품 가죽 가방',            price:2400000, cat:'패션',    img:'https://images.unsplash.com/photo-1612902456551-333ac5afa26e?auto=format&fit=crop&w=640&q=70' },
 ];
+// 상품 그림: 사진이 있으면 사진, 없거나 실패하면 이모지
+const pic = it => it.img ? `<img class="pimg" src="${it.img}" alt="${esc(it.n)}" loading="lazy" onerror="this.remove()">${it.e}` : it.e;
 const CATS = ['전체','먹거리','취미','패션','전자기기','키즈'];
 
 /* ---------- 가격 등급 (이름표만, 기간 제한 없음) ---------- */
@@ -628,7 +900,7 @@ function parseGoal(raw){
 }
 
 /* ---------- 상태 ---------- */
-const LS = 'haenae_v2', DAY = 864e5;
+const LS = 'haenae_v3', DAY = 864e5;
 const fresh = () => ({ user:null, points:0, plans:[], custom:[] });
 let S;
 try { S = JSON.parse(localStorage.getItem(LS)) || fresh(); } catch(e) { S = fresh(); }
@@ -643,7 +915,7 @@ const allProducts = () => [...S.custom, ...PRODUCTS];
 const BASE = location.href.split('#')[0];
 const isKid = () => !!(S.user && S.user.kid);
 
-let view = { s: S.user ? 'shop' : 'land' }, draft = null, ob = null, cat = '전체', who = 'me', fileTarget = null;
+let view = { s:'land' }, draft = null, ob = null, cat = '전체', who = 'me', fileTarget = null;
 function go(s, p = {}){ view = { s, ...p }; render(); window.scrollTo(0, 0); }
 function toast(m){ const t = $('#toast'); t.textContent = m; t.classList.add('on'); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('on'), 2200); }
 
@@ -702,23 +974,61 @@ function render(){
   $('#app').innerHTML = SCREENS[s]();
   const tabbed = ['shop','plans','my'].includes(s);
   $('#tabs').style.display = tabbed ? '' : 'none';
-  $('#frame').className = 'frame' + (tabbed ? '' : ' notab') + (s === 'result' ? ' dark' : '');
+  $('#frame').className = 'frame' + (tabbed ? '' : ' notab');
   document.querySelectorAll('#tabs [data-t]').forEach(b => b.classList.toggle('on', b.dataset.t === s));
   const n = S.plans.filter(p => p.status === 'active').length;
   $('#tabN').hidden = !n; $('#tabN').textContent = n;
   if (s === 'result' && view.win) confetti();
 }
 
+/* ---------- 픽셀 아트 배경 (SVG, 각진 픽셀) ---------- */
+function pxScene(kind){
+  const W = 120, H = 80, r = [];
+  let seed = kind === 'sky' ? 3 : 11;
+  const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+  const R = (x, y, w, h, c) => r.push(`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${c}"/>`);
+  const disc = (cx, cy, rad, c) => { for (let y = -rad; y <= rad; y++) { const w = Math.round(Math.sqrt(rad * rad - y * y)); R(cx - w, cy + y, w * 2, 1, c); } };
+  const ridge = (base, amp, f1, f2, c) => { for (let x = 0; x < W; x += 2) { const h = Math.round(base + amp * Math.sin(x / f1) + amp * .6 * Math.sin(x / f2 + 1.3)); R(x, H - h, 2, h, c); } };
+  const cloud = (x, y, c) => { R(x + 3, y, 8, 2, c); R(x, y + 2, 15, 2, c); R(x + 4, y + 4, 6, 1, c); };
+  if (kind === 'sunset') {
+    ['#7b4dff','#b04de0','#ff4fa3','#ff6f7f','#ff8f5a','#ffb347'].forEach((c, i) => R(0, i * 9, W, 9, c));
+    R(0, 54, W, 26, '#ffb347');
+    disc(34, 46, 14, '#ffe14a'); disc(34, 46, 11, '#fff5b0');
+    for (let y = 40; y < 60; y += 3) R(20, y, 28, 1, '#ff8f5a');
+    cloud(4, 14, '#ffd6ea'); cloud(80, 8, '#ffd6ea'); cloud(98, 30, '#ffc2dd');
+    ridge(30, 4, 9, 4.3, '#c2408f'); ridge(21, 3, 6, 3.1, '#8a2f86'); ridge(11, 2, 5, 2.2, '#4f1d6b');
+    R(0, H - 5, W, 5, '#2a0f3a');
+    const cactus = (x, h) => { const y = H - 5 - h, c = '#1a0f2e'; R(x, y, 3, h, c); R(x - 3, y + 6, 3, 2, c); R(x - 3, y + 2, 2, 5, c); R(x + 3, y + 9, 3, 2, c); R(x + 4, y + 4, 2, 6, c); };
+    cactus(12, 24); cactus(97, 28); cactus(110, 15); cactus(58, 11);
+    [[78, 22], [86, 28]].forEach(([x, y]) => { const c = '#1a0f2e'; R(x - 1, y - 1, 1, 1, c); R(x, y, 1, 1, c); R(x + 1, y + 1, 1, 1, c); R(x + 2, y, 1, 1, c); R(x + 3, y - 1, 1, 1, c); });
+  } else if (kind === 'sky') {
+    R(0, 0, W, H, '#5d8ff0');
+    cloud(8, 10, '#ffffff'); cloud(90, 6, '#ffffff'); cloud(66, 26, '#eaf2ff'); cloud(-4, 34, '#eaf2ff');
+    R(0, H - 16, W, 3, '#6dcf45'); R(0, H - 13, W, 2, '#3f9a2a'); R(0, H - 11, W, 11, '#b07a42');
+    for (let y = H - 11; y < H; y += 2) for (let x = (y % 4 ? 0 : 2); x < W; x += 4) R(x, y, 2, 1, '#97622f');
+    const tree = x => { R(x + 4, H - 24, 2, 8, '#7a4a22'); R(x, H - 32, 10, 7, '#6cc04a'); R(x + 1, H - 35, 8, 3, '#86d962'); R(x + 1, H - 26, 8, 2, '#4f9e33'); };
+    tree(4); tree(106);
+  } else {
+    ['#2b2150','#33275e','#3c2d6b','#46337a'].forEach((c, i) => R(0, i * 15, W, 15, c));
+    R(0, 60, W, 20, '#46337a');
+    for (let i = 0; i < 40; i++) R(Math.floor(rnd() * W), Math.floor(rnd() * 52), 1, 1, rnd() > .7 ? '#ffe9a8' : '#ffffff');
+    disc(94, 14, 7, '#fff1c2'); disc(97, 12, 6, '#2b2150');
+    ridge(22, 3, 8, 3.7, '#251c45'); ridge(12, 2, 5, 2.5, '#18122f');
+  }
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" shape-rendering="crispEdges" aria-hidden="true">${r.join('')}</svg>`;
+}
+
 /* 랜딩 */
 SCREENS.land = () => `
 <div class="land fade">
-  <div class="top"><span class="brand">해내<i>샵</i></span></div>
-  <div class="hero">
-    <span class="lk">🔒</span>
-    <h1>결제는 지금,<br><em>배송은 해냈을 때.</em></h1>
-    <p>갖고 싶은 물건을 먼저 결제하세요.<br>나의 목표를 해내야 잠금이 풀립니다.</p>
-    <button class="btn acc" data-a="start">내 목표 적고 시작하기</button>
+  <div class="top"><span class="brand">해내<i>샵</i></span><span class="pts en" style="margin-left:auto">VER 1.0</span></div>
+  <div class="scene">${pxScene('sunset')}
+    <div class="scene-tx"><div class="en">START GAME</div><h1>해내샵</h1><div class="pill">결제는 지금, 배송은 해냈을 때.</div></div>
+    <div class="scene-ft">© 2026 HAENAE SHOP · 1 PLAYER READY</div>
   </div>
+  <button class="btn acc start" data-a="start"><span class="blink">▶</span>&nbsp;PRESS START</button>
+  <p class="sub2">갖고 싶은 물건을 먼저 결제하고,<br>목표를 해내야 잠금이 풀려요 🔒</p>
+  <div class="howto">HOW TO PLAY</div>
   <div class="steps">
     <div class="step"><span class="n">1</span><div><b>이루고 싶은 목표를 편하게 적기</b><span>"3달 동안 10kg 빼기"처럼 쓰면 알아서 정리돼요</span></div></div>
     <div class="step"><span class="n">2</span><div><b>사고 싶은 물건과 받을 날 고르기</b><span>내일부터 3달까지, 목표가 기간에 맞게 나눠져요</span></div></div>
@@ -727,7 +1037,7 @@ SCREENS.land = () => `
   </div>
   <div class="story">
     <p>"하고 싶은 건 많은데 끝까지 해내지 못하는 제가 답답했어요. 알람을 끄려면 사진을 찍어야 하는 앱처럼, 저에게도 강제성이 필요했습니다. 그래서 갖고 싶은 물건을 인질로 잡기로 했어요."</p>
-    <div class="by">— 임준형, 해내샵 첫 번째 고객이자 만든 사람</div>
+    <div class="by en">PLAYER 1 · 임준형 · 첫 번째 고객이자 만든 사람</div>
   </div>
 </div>`;
 
@@ -751,19 +1061,22 @@ SCREENS.ob = () => {
   const back = `<header class="bar"><button class="back" data-a="obBack">‹</button><h2></h2></header>`;
   if (st === 0) return `${back}${dots}
   <div class="ob fade">
-    <h1>누가 챌린지를 하나요?</h1>
-    <p class="s">아이를 위해 보호자가 목표를 정할 수도 있어요.</p>
+    <div class="eyebrow">SELECT PLAYER</div>
     <div class="who">
-      <button class="${!ob.kid ? 'on' : ''}" data-a="obKid" data-v="0"><div class="e">🙋</div><b>나</b><span>내 목표, 내 보상</span></button>
+      <button class="${!ob.kid ? 'on' : ''}" data-a="obKid" data-v="0"><div class="e">🙋</div><b>1P · 나</b><span>내 목표, 내 보상</span></button>
       <button class="${ob.kid ? 'on' : ''}" data-a="obKid" data-v="1"><div class="e">👨‍👩‍👧</div><b>우리 아이</b><span>보호자가 목표를 정해요</span></button>
     </div>
-    <label class="field"><span>${ob.kid ? '아이 이름' : '이름'}</span>
-      <input class="inp" data-in="obName" maxlength="10" value="${esc(ob.name)}" placeholder="${ob.kid ? '예) 하윤' : '예) 임준형'}" /></label>
-  </div>
-  <div class="sticky"><button class="btn" data-a="obNext" ${ob.name.trim() ? '' : 'disabled'} id="obNext">다음</button></div>`;
+    <div class="dialog">
+      <div class="dlg-t">Insert Your Name ...</div>
+      <div class="dlg-s">${ob.kid ? '아이 이름을 적어주세요' : '플레이어 이름을 적어주세요'}</div>
+      <input class="inp name-in" data-in="obName" maxlength="10" value="${esc(ob.name)}" placeholder="_ _ _ 이름 입력" autofocus />
+      <div class="dlg-b"><button class="btn line" data-a="obBack">Back</button><button class="btn acc" data-a="obNext" ${ob.name.trim() ? '' : 'disabled'} id="obNext">Start</button></div>
+    </div>
+  </div>`;
 
   return `${back}${dots}
   <div class="ob fade">
+    <div class="eyebrow">STAGE 1 · QUEST 등록</div>
     <h1>${ob.kid ? `${esc(ob.name)}에게 바라는 목표를` : '이루고 싶은 목표를'}<br>편하게 적어주세요</h1>
     <p class="s">한 줄에 하나씩 적으면 종류·숫자·기간을 알아서 정리해 드려요. 숫자가 있으면 더 정확해요.</p>
     <div class="ex">${(ob.kid ? KID_EX : EX).map(x => `<button data-a="obEx" data-x="${esc(x)}">+ ${esc(x)}</button>`).join('')}</div>
@@ -790,7 +1103,7 @@ SCREENS.shop = () => {
   if (isKid() && cat === '전체') list = [...list].sort((a, b) => (b.cat === '키즈') - (a.cat === '키즈'));
   return `
   <header class="bar"><span class="brand">해내<i>샵</i></span><span class="pts">P ${S.points.toLocaleString()}</span></header>
-  <div class="banner"><h3>결제는 지금,<br><em>배송은 해냈을 때.</em></h3><p>${esc(S.user.name)}${isKid() ? '의' : ' 님의'} 목표 ${S.user.goals.length}개 중 하나를 해내면 배송돼요</p><span class="lk">🔒</span></div>
+  <div class="banner"><div class="en">QUEST SHOP</div><h3>결제는 지금,<br><em>배송은 해냈을 때.</em></h3><p>${esc(S.user.name)}${isKid() ? '의' : ' 님의'} 목표 ${S.user.goals.length}개 중 하나를 해내면 배송돼요</p><span class="lk">🔒</span></div>
   ${active.length ? `<button class="active" data-a="tab" data-t="plans"><b>🔥</b><span>진행 중인 챌린지 ${active.length}개 · 오늘 인증하러 가기</span>›</button>` : ''}
   <div class="sec pad">무엇을 갖고 싶나요?</div>
   <div class="chips">${CATS.map(c => `<button class="chip ${c === cat ? 'on' : ''}" data-a="cat" data-c="${c}">${c}</button>`).join('')}</div>
@@ -798,7 +1111,7 @@ SCREENS.shop = () => {
   <div class="grid fade">
     <button class="prod add" data-a="addItem"><div class="img">＋</div><div class="tx"><b>사고 싶은 물건<br>직접 등록하기</b><small>이름과 가격만 적으면 돼요</small></div></button>
     ${list.map(p => { const t = TIERS[tierOf(p.price)];
-      return `<button class="prod" data-a="pick" data-id="${p.id}"><div class="img" style="background:${p.bg}"><span class="tier tag lock">${t.name}</span>${p.e}</div>
+      return `<button class="prod" data-a="pick" data-id="${p.id}"><div class="img"><span class="tier tag">${t.name}</span>${pic(p)}</div>
       <div class="tx"><b>${esc(p.n)}</b><div class="p won">${won(p.price)}</div><small>${t.name}</small></div></button>`; }).join('')}
   </div>`;
 };
@@ -826,7 +1139,7 @@ SCREENS.setup = () => {
   const cu = d.days % 30 === 0 ? ['개월', d.days / 30] : d.days % 7 === 0 ? ['주', d.days / 7] : ['일', d.days];
   return `
   <header class="bar"><button class="back" data-a="tab" data-t="shop">‹</button><h2>챌린지 설정</h2></header>
-  <div class="phead fade"><div class="img" style="background:${it.bg}">${it.e}</div><div><span class="tag lock">${t.name}</span><b style="margin-top:6px">${esc(it.n)}</b><div class="p won">${won(it.price)}</div></div></div>
+  <div class="phead fade"><div class="img">${pic(it)}</div><div><span class="tag lock">${t.name}</span><b style="margin-top:6px">${esc(it.n)}</b><div class="p won">${won(it.price)}</div></div></div>
 
   <div class="pad">
     <div class="sec">언제 받고 싶나요?</div>
@@ -922,7 +1235,7 @@ SCREENS.plans = () => {
     const s = succ(p, 'me'), pr = p.status === 'active' ? Math.min(100, s / p.need * 100) : 100;
     const c = p.status === 'won' ? 'var(--ok)' : p.status === 'lost' ? '#c9c6bd' : 'var(--lock)';
     const cd = Math.min(curDay(p), p.days - 1);
-    return `<button class="pcard" data-a="open" data-id="${p.id}"><div class="ring" style="--p:${pr};--c:${c}"><div>${p.item.e}<i>${p.status === 'won' ? '🔓' : p.status === 'lost' ? '💜' : '🔒'}</i></div></div>
+    return `<button class="pcard" data-a="open" data-id="${p.id}"><div class="ring" style="--p:${pr};--c:${c}"><div>${pic(p.item)}<i>${p.status === 'won' ? '🔓' : p.status === 'lost' ? '💜' : '🔒'}</i></div></div>
       <div class="tx"><b>${esc(p.item.n)}</b><span>${esc(p.ch[0].t)}</span><br><span>${p.status === 'active' ? `Day ${cd + 1}/${p.days} · ${s}/${p.need} 성공${dayDone(p, 'me', cd) ? ' · 오늘 완료 ✅' : ' · 오늘 인증 남음'}` : p.status === 'won' ? '잠금 해제 · 배송 준비 중' : `포인트 ${p.share.toLocaleString()}P로 전환`}</span>
       ${p.mode !== 'solo' ? `<div style="margin-top:4px"><span class="tag ${p.mode === 'duel' ? 'acc' : 'ok'}">${p.mode === 'duel' ? '⚔️ vs' : '🤝 with'} ${esc(p.partner)}</span></div>` : ''}</div>›</button>`;
   };
@@ -959,7 +1272,7 @@ SCREENS.board = () => {
   return `
   <header class="bar"><button class="back" data-a="tab" data-t="plans">‹</button><h2></h2>${p.status !== 'active' ? `<span class="tag ${p.status === 'won' ? 'ok' : 'lock'}">${p.status === 'won' ? '잠금 해제' : '포인트 전환'}</span>` : `<span class="tag lock">🔒 잠김</span>`}</header>
   <div class="bhead fade">
-    <div class="ring" style="--p:${pr};--c:${p.status === 'won' ? 'var(--ok)' : 'var(--lock)'}"><div>${p.item.e}<i>${p.status === 'won' ? '🔓' : '🔒'}</i></div></div>
+    <div class="ring" style="--p:${pr};--c:${p.status === 'won' ? 'var(--ok)' : 'var(--lock)'}"><div>${pic(p.item)}<i>${p.status === 'won' ? '🔓' : '🔒'}</i></div></div>
     <h1>${esc(p.item.n)}</h1>
     <div class="meta">${p.ch[0].e} ${esc(p.ch[0].t)}</div>
     <div class="meta">${p.status === 'active' ? `Day ${cd + 1} / ${p.days} · ${p.days - cd - 1 > 0 ? `${p.days - cd - 1}일 남음` : '마지막 날'}` : '종료된 챌린지'}</div>
@@ -1008,19 +1321,22 @@ SCREENS.result = () => {
     ? `<br>⚔️ <b>나 ${p.vs[0]}${unit} : ${esc(p.partner)} ${p.vs[1]}${unit}</b>${p.wager ? ` → ${win ? `${esc(p.partner)}의 벌칙: ` : '나의 벌칙: '}<b>${esc(p.wager)}</b>` : ''}`
     : `<br>🤝 팀 합산 <b>${p.vs[0] + p.vs[1]}${unit}</b> / 필요 ${p.need * 2}${unit}`) : '';
   return win ? `
-  <div class="res win">
-    <div class="stage"><div class="glow"></div><div class="lkk">🔒</div><div class="it">${p.item.e}</div></div>
-    <div class="lab"><span class="tag ok">🔓 잠금 해제</span><h1>해냈다!</h1>
-    <p>${esc(p.item.n)}의 잠금이 풀렸어요.<br>주문이 접수되어 배송을 준비하고 있어요.</p>
+  <div class="res res2 win">
+    <div class="bgscene">${pxScene('sky')}</div>
+    <div class="paused"><div class="en">STAGE CLEAR!</div><div>🔓 해냈다! 잠금 해제</div></div>
+    <div class="stage"><div class="glow"></div><div class="lkk">🔒</div><div class="it">${pic(p.item)}</div></div>
+    <div class="lab">
+    <p class="sub">${esc(p.item.n)}의 잠금이 풀렸어요.<br>주문이 접수되어 배송을 준비하고 있어요.</p>
     <div class="box">🎯 <b>${esc(p.ch[0].t)}</b><br>📅 ${p.days}일 중 <b>${r.me}${unit}</b> 해냄 (기준 ${r.need}${unit})${p.final ? '<br>🏁 최종 인증 완료' : ''}${vs}${p.bonus ? `<br>🎁 인증 보너스 <b>+${p.bonus.toLocaleString()}P</b> 적립` : ''}</div>
-    <div class="acts"><button class="btn acc" data-a="tab" data-t="shop">다음 목표에 도전하기</button><button class="btn line" data-a="open" data-id="${p.id}">기록 보기</button></div></div>
+    <div class="acts"><button class="btn acc" data-a="tab" data-t="shop">▶ NEXT STAGE · 다음 목표</button><button class="btn line" data-a="open" data-id="${p.id}">기록 보기</button></div></div>
   </div>` : `
-  <div class="res lose">
+  <div class="res res2 lose">
+    <div class="bgscene">${pxScene('night')}</div>
+    <div class="paused over"><div class="en">GAME OVER</div><div>💜 이번엔 아쉬워요 · 포인트 전환</div></div>
     <div class="stage"><div class="it"><span class="coin">💜</span></div></div>
-    <span class="tag lock">포인트 전환</span><h1>이번엔 아쉬워요</h1>
-    <p>${esc(p.ch[0].t)}<br>${p.days}일 중 ${r.me}${unit} 해냄 (기준 ${r.need}${unit})${p.final && !r.fin ? ' · 최종 인증 미완료' : ''}${p.vs && p.mode === 'duel' ? `<br>⚔️ 나 ${p.vs[0]}${unit} : ${esc(p.partner)} ${p.vs[1]}${unit}` : ''}</p>
+    <p class="sub">${esc(p.ch[0].t)}<br>${p.days}일 중 ${r.me}${unit} 해냄 (기준 ${r.need}${unit})${p.final && !r.fin ? ' · 최종 인증 미완료' : ''}${p.vs && p.mode === 'duel' ? `<br>⚔️ 나 ${p.vs[0]}${unit} : ${esc(p.partner)} ${p.vs[1]}${unit}` : ''}</p>
     <div class="box">💜 결제한 <b>${won(p.share)}</b>은 사라지지 않았어요. 해내샵 포인트 <b>${p.share.toLocaleString()}P</b>로 전환됐어요.<br>단, 포인트로 다시 사도 <b>챌린지는 또 해내야 받을 수 있어요.</b>${p.mode === 'duel' && p.wager ? `<br>🎲 벌칙: <b>${esc(p.wager)}</b>` : ''}</div>
-    <div class="acts"><button class="btn acc" data-a="retry" data-id="${p.id}">포인트로 다시 도전하기</button><button class="btn line" data-a="tab" data-t="shop">다른 물건 보기</button></div>
+    <div class="acts"><button class="btn acc" data-a="retry" data-id="${p.id}"><span class="blink">▶</span>&nbsp;CONTINUE? 포인트로 재도전</button><button class="btn line" data-a="tab" data-t="shop">다른 물건 보기</button></div>
   </div>`;
 };
 
@@ -1040,6 +1356,7 @@ SCREENS.my = () => {
     <div class="gl" style="margin-bottom:8px"><span class="e">📊</span><div style="flex:1"><b>데이터 기여</b><div style="font-size:12px;color:var(--sub)">익명 통계에 쓰인 인증 ${S.plans.filter(p => p.bonus).reduce((n, p) => n + Object.keys(p.log.me).length, 0)}건 · 받은 보너스 ${(S.plans.filter(p => p.bonus && p.status === 'won').length * BONUS).toLocaleString()}P</div></div></div>
     <div class="kpis" style="margin-top:0"><div class="kpi"><span>도전</span><b>${S.plans.length}</b></div><div class="kpi"><span>해냄</span><b style="color:var(--ok)">${won_}</b></div><div class="kpi"><span>포인트 전환</span><b style="color:var(--lock)">${lost}</b></div></div>
     <button class="danger" data-a="reset" id="resetBtn">데이터 초기화</button>
+    <p class="credit">상품 사진: Unsplash (Unsplash License)</p>
   </div>`;
 };
 
@@ -1135,7 +1452,16 @@ function obParseText(){
   return added.length;
 }
 const A = {
-  start(){ obInit(); go('ob'); },
+  start(){
+    if (!S.user) { obInit(); return go('ob'); }
+    sheet(`<h3 class="en" style="font-size:24px">LOAD GAME?</h3><p>저장된 플레이어가 있어요.</p>
+      <div class="loadbox">
+        <button class="btn acc" data-a="contGame">▶ CONTINUE<small>${esc(S.user.name)}${S.user.kid ? ' (아이 모드)' : ''} · 진행 중 ${S.plans.filter(p => p.status === 'active').length}개 · P ${S.points.toLocaleString()}</small></button>
+        <button class="btn line" data-a="newGame">★ NEW GAME<small>새 이름으로 처음부터 (기존 기록 삭제)</small></button>
+      </div>`);
+  },
+  contGame(){ closeSheet(); go('shop'); },
+  newGame(){ closeSheet(); S = fresh(); save(); cat = '전체'; obInit(); go('ob'); },
   tab(el){ go(el.dataset.t); },
   obBack(){ if (ob.step && !ob.ret) { ob.step--; render(); } else go(ob.ret || (S.user ? 'my' : 'land')); },
   obKid(el){ const k = el.dataset.v === '1'; if (k !== ob.kid) { ob.kid = k; ob.goals = []; } render(); },
@@ -1177,13 +1503,13 @@ const A = {
   pay(){
     const d = draft, it = d.item, m = draftMission(), need = needOf(m, it.price, d.days);
     const share = d.mode === 'team' ? Math.ceil(it.price / 2) : it.price, usable = d.usePts ? Math.min(S.points, share) : 0;
-    const p = { id:uid(), key:uid() + uid(), item:{ id:it.id, n:it.n, e:it.e, price:it.price, bg:it.bg }, days:d.days, start:sod(Date.now()), offset:0,
+    const p = { id:uid(), key:uid() + uid(), item:{ id:it.id, n:it.n, e:it.e, price:it.price, bg:it.bg, img:it.img || null }, days:d.days, start:sod(Date.now()), offset:0,
       mode:isKid() ? 'solo' : d.mode, partner:d.mode === 'solo' || isKid() ? '' : d.partner.trim(), wager:d.mode === 'duel' ? d.wager.trim() : '',
       need, weekly:!!m.need, final:m.final || null, bonus: bonusOK(m.v) && d.consent ? BONUS : 0, share, ptsUsed:usable, goalId:d.pick, safe:!!d.safe[d.pick],
       ch:[{ id:m.id, t:m.t, s:m.s, v:m.v, e:m.e }], log:{ me:{}, pt:{} }, sim:{}, status:'active', created:Date.now() };
     S.points -= usable; S.plans.push(p); save();
     const ov = document.createElement('div'); ov.className = 'paying';
-    ov.innerHTML = `<div><div class="lk">🔒</div><b>결제 완료! 잠겼어요</b><span>${esc(it.n)}는 해낸 다음에 만나요</span></div>`;
+    ov.innerHTML = `<div><div class="lk">${it.img ? `<img class="pimg" src="${it.img}" alt="">` : '🔒'}</div><b>🔒 LOCKED!</b><span>결제 완료 · ${esc(it.n)}는 해낸 다음에 만나요</span></div>`;
     document.body.appendChild(ov);
     setTimeout(() => { ov.remove(); who = 'me'; go('board', { id:p.id }); }, 1700);
   },
